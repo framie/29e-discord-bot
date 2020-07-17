@@ -1,0 +1,8 @@
+{
+    "name": "29e Bot",
+    "version": "0.0.1",
+    "description": "For 29e Gaming",
+    "main": "bot.js",
+    "author": "chiwa",
+    "dependencies": {}
+}

@@ -1,0 +1,5 @@
+nodemon bot.js
+
+https://leovoel.github.io/embed-visualizer/
+
+tell jokes
