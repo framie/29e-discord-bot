@@ -3,3 +3,5 @@ nodemon bot.js
 https://leovoel.github.io/embed-visualizer/
 
 tell jokes
+-theme gives an adjective/genre for music
+fish catcher

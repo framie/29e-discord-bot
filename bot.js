@@ -1,59 +1,57 @@
-const Discord = require('discord.io');
-const logger = require('winston');
-
+const Discord = require('discord.js');
 const auth = require('./auth.json');
 const Helpers = require('./helpers/main.js');
 const Music = require('./helpers/music.js');
 
-logger.remove(logger.transports.Console);
-logger.add(new logger.transports.Console, {
-    colorize: true
-});
-logger.level = 'debug';
+const client = new Discord.Client();
+client.login(auth.discord_token);
 
-const bot = new Discord.Client({
-    token: auth.discord_token,
-    autorun: true
-});
-const helpers = new Helpers(bot);
-const music = new Music(bot);
+const helpers = new Helpers(client);
+const music = new Music(client);
 const channelIDMap = {
     '733306905908477962': '29e-bot'
 }
 
-bot.on('ready', (evt) => {
-    logger.info('Connected');
-    logger.info('Logged in as: ');
-    logger.info(bot.username + ' - (' + bot.id + ')');
+client.once('ready', () => {
+    console.log('Connected');
+    console.log('Logged in as: ');
+    console.log(client.user.username + ' - (' + client.user.id + ')');
 });
 
 // Bot message handler
-bot.on('message', (user, userID, channelID, message, evt) => {
+client.on('message', message => {
+    const channelID = message.channel.id;
+    const channelName = message.channel.name;
+    const userName = message.author.username;
+    const userID = message.author.id;
+    const content = message.content;
     
-    console.log(`{ user: ${ user }, userID: ${ userID }, channelID: ${ channelID }, channelName: ${ channelIDMap[channelID] }, message: ${ message } }`);
+    console.log(message)
 
-    if (message[0] === '-') {
-        const args = message.substring(1).split(' ').slice(1);
-        const command = message.substring(1).split(' ')[0];
+    console.log(`{ user: ${ userName }, userID: ${ userID }, channelID: ${ channelID }, channelName: ${ channelName }, content: ${ content } }`);
+
+    if (content[0] === '-') {
+        const args = content.substring(1).split(' ').slice(1);
+        const command = content.substring(1).split(' ')[0];
 
         const commands = {
             'help': {
-                'func': (commands) => helpers.helpHandler(channelID, user, commands),
+                'func': (commands) => helpers.helpHandler(channelID, userName, commands),
                 'description': 'Provides details and usage for all commands',
                 'usage': ['-help']
             },
             'hello': {
-                'func': () => helpers.sendEmbeddedMessage(channelID, 'hi'),
+                'func': () => helpers.sendEmbeddedMessage(channelID, {description: 'hi'}),
                 'description': 'Says hi',
                 'usage': ['-hello']
             },
             'strat': {
-                'func': () => helpers.stratHandler(channelID, message, args),
+                'func': () => helpers.stratHandler(channelID, content, args),
                 'description': '',
                 'usage': ['-strat (map) [side] [locations]']
             },
             'weather': {
-                'func': () => helpers.sendEmbeddedMessage(channelID, 'It is raining in Johnsonville'),
+                'func': () => helpers.sendEmbeddedMessage(channelID, {description: 'It is raining in Johnsonville'}),
                 'description': 'Provides weather report for current location',
                 'usage': ['-weather']
             },
@@ -64,7 +62,7 @@ bot.on('message', (user, userID, channelID, message, evt) => {
             },
             'put': {
                 'hidden': true,
-                'func': () => helpers.ollysAssHandler(channelID, message, userID),
+                'func': () => helpers.ollysAssHandler(channelID, content, userID),
                 'description': 'Put it in Olly\'s ass',
                 'usage': ['-put it in my ass', '-put it in ollys ass']
             },
@@ -75,7 +73,7 @@ bot.on('message', (user, userID, channelID, message, evt) => {
         }
 
         if (command.toLowerCase() in commands) commands[command.toLowerCase()].func(commands);
-        else if (channelID === '733306905908477962') helpers.sendEmbeddedMessage(channelID, 'Invalid input. Type `-help` for a list of commands');
+        else if (channelID === '733306905908477962') helpers.sendEmbeddedMessage(channelID, {description: 'Invalid input. Type `-help` for a list of commands'});
 
     }
     

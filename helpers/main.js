@@ -1,11 +1,9 @@
-const auth = require('../auth.json');
-const ytdl = require('ytdl-core');
-const { resolve } = require('path');
-const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+const XMLHttpRequest = require('xhr2')
+const Discord = require('discord.js');
 
 class Helpers {
-    constructor(bot) {
-        this.bot = bot;
+    constructor(client) {
+        this.client = client;
     }
 
     AJAX = (method, url, params = {}, cb = undefined, async = false) => {
@@ -25,24 +23,22 @@ class Helpers {
     }
 
     randomNumber = (min = 1, max = 1) => {
-
+        return true;
     }
 
-    sendEmbeddedMessage = (channelID, description = '', color = 3171297) => {
-        this.bot.sendMessage({
-            to: channelID,
-            embed: {
-                description,
-                color
-            }
-        });
+    sendEmbeddedMessage = (channelID, args = {}) => {
+        args.colour = args.colour || 3171297;
+        const channel = this.client.channels.cache.get(channelID);
+        const message = new Discord.MessageEmbed();
+        args.colour && message.setColor(args.colour);
+        args.description && message.setDescription(args.description);
+        args.image && message.setImage(args.image);
+        channel.send(message);
     }
 
     sendMessage = (channelID, message) => {
-        this.bot.sendMessage({
-            to: channelID,
-            message
-        });
+        const channel = this.client.channels.cache.get(channelID);
+        channel.send(message);
     }
 
     getStrat = (map, side = 't', locationCount = undefined) => {
@@ -118,23 +114,23 @@ class Helpers {
     stratHandler = (channelID, message, args) => {
         let strat = 'Please enter a map name : `dust`, `inferno`, `mirage`';
         if (args.length > 0) strat = this.getStrat(args[0].toLowerCase(), args[1]);
-        this.sendEmbeddedMessage(channelID, message === message.toUpperCase() ? strat.toUpperCase() : strat);
+        this.sendEmbeddedMessage(channelID, {description: message === message.toUpperCase() ? strat.toUpperCase() : strat});
     }
 
     helpHandler = (channelID, user, commands) => {
         console.log('commands', commands);
-        this.sendEmbeddedMessage(channelID, `Fuck off go help yourself, ${ user }`);
+        this.sendEmbeddedMessage(channelID, {description: `Fuck off go help yourself, ${ user }`});
     }
 
     ollysAssHandler = (channelID, message, userID) => {
         if (message.toLowerCase() === '-put it in my ass') {
             if (userID === '319733281476313088') {
-                this.sendEmbeddedMessage(channelID, 'Anything for you, Olly :wink:');
+                this.sendEmbeddedMessage(channelID, {description: 'Anything for you, Olly :wink:'});
             } else {
-                this.sendEmbeddedMessage(channelID, 'Sorry but that\'s for Olly only :triumph:');
+                this.sendEmbeddedMessage(channelID, {description: 'Sorry but that\'s for Olly only :triumph:'});
             }
         } else if (message.toLowerCase() === '-put it in ollys ass' || message.toLowerCase() === '-put it in olly\'s ass') {
-            this.sendEmbeddedMessage(channelID, 'I can definitely do that :wink:');
+            this.sendEmbeddedMessage(channelID, {description: 'I can definitely do that :wink:'});
         }
     }
 
@@ -150,14 +146,7 @@ class Helpers {
         if (args.length && !isNaN(args[0])) index = parseInt(args[0]);
         if (index < 1) index = 1;
         else if (index > 5) index = 5;
-        this.bot.sendMessage({
-            to: channelID,
-            embed: {
-                image: {
-                    url: imageUrls[index - 1]
-                }
-            }
-        });
+        this.sendEmbeddedMessage(channelID, {image: imageUrls[index - 1]});
     }
 
     getUserVoiceChannel = (channels, userID) => {
