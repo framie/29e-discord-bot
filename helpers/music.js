@@ -45,7 +45,9 @@ class Music {
         });
     }
 
-    playHandler = async (channelID, userID, args) => {
+    playHandler = async (message, args) => {
+        const channelID = message.channel.id;
+        const userID = message.author.id;
         return new Promise( async (resolve, reject) => {
             const userVoiceChannel = this.helpers.getUserVoiceChannel(this.bot.channels, userID);
             if (!userVoiceChannel) {

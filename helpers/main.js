@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
-const fetch = require("node-fetch");
-const jsdom = require("jsdom");
+const fetch = require('node-fetch');
+const jsdom = require('jsdom');
 const fs = require('fs');
 
 class Helpers {
@@ -57,7 +57,8 @@ class Helpers {
         channel.send(message);
     }
 
-    leaderboardHandler = (channelID) => {
+    leaderboardHandler = (message) => {
+        const channelID = message.channel.id;
         const users = Object.keys(this.userData).map((key) => {
             return {
                 name: this.userData[key].name,
@@ -127,7 +128,8 @@ class Helpers {
         this.setData();
     }
 
-    getFish = (channelID) => {
+    getFish = (message) => {
+        const channelID = message.channel.id;
         if (!this.currentFish.caught) {
             if (!('name' in this.currentFish)) return;
             this.sendEmbeddedMessage(channelID, {description: 'There is still a fish to catch', image: {url: this.currentFish.image}});
@@ -151,7 +153,8 @@ class Helpers {
         });
     }
 
-    async catchHandler(channelID, message, args) {
+    async catchHandler(message, args) {
+        const channelID = message.channel.id;
         const guildMember = message.channel.guild.members.cache.get(message.author.id);
         const userName = guildMember.user.username;
         const userID = guildMember.user.id;
@@ -280,18 +283,23 @@ class Helpers {
         return '';
     }
 
-    stratHandler = (channelID, message, args) => {
+    stratHandler = (message, args) => {
+        const channelID = message.channel.id;
+        const content = message.content;
         let strat = 'Please enter a map name : `dust`, `inferno`, `mirage`';
         if (args.length > 0) strat = this.getStrat(args[0].toLowerCase(), args[1]);
-        this.sendEmbeddedMessage(channelID, {description: message === message.toUpperCase() ? strat.toUpperCase() : strat});
+        this.sendEmbeddedMessage(channelID, {description: content === content.toUpperCase() ? strat.toUpperCase() : strat});
     }
 
-    helpHandler = (channelID, user, commands) => {
+    helpHandler = (message, commands) => {
+        const channelID = message.channel.id;
+        const userName = message.author.username;
         console.log('commands', commands);
-        this.sendEmbeddedMessage(channelID, {description: `Help yourself, ${ user }`});
+        this.sendEmbeddedMessage(channelID, {description: `Help yourself, ${ userName }`});
     }
 
-    yahnHandler = (channelID, args) => {
+    yahnHandler = (message, args) => {
+        const channelID = message.channel.id;
         const imageUrls = [
             'https://i.imgur.com/mpO8i9d.jpg',
             'https://i.imgur.com/DKBORzC.jpg',
@@ -326,7 +334,7 @@ class Helpers {
         });
     }
 
-    channelHandler = (channelMap, message, args) => {
+    channelHandler = (message, channelMap, args) => {
         let channelID;
         for (const [id, channel] of Object.entries(channelMap)) {
             if (channel.name.toLowerCase().includes(args.join(' ').toLowerCase())) channelID = channel.id;

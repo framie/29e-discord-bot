@@ -9,10 +9,7 @@ client.login(auth.discord_token);
 const helpers = new Helpers(client);
 const music = new Music(client);
 const channelMap = {};
-const userIDMap = {
-    '319733281476313088': 'Olly'
-}
-let isaacsGamingTime = false;
+const userIDMap = {}
 
 client.once('ready', () => {
     console.log(`Connected. Logged in as: ${ client.user.username } - (${ client.user.id })`);
@@ -27,7 +24,6 @@ client.once('ready', () => {
 
 // Bot message handler
 client.on('message', async message => {
-    if (isaacsGamingTime) return;
     const channelID = message.channel.id;
     const channelName = message.channel.name;
     const userName = message.author.username;
@@ -106,11 +102,6 @@ client.on('message', async message => {
         return;
     }
 
-    if (content === '-isaac') {
-        return;
-        isaacsGamingTime = !isaacsGamingTime;
-    }
-
     if (content === '-microwave') {
         message.channel.guild.members.cache.each(member => {
             if (member.user.username === 'AuntyJacinda') member.voice.setChannel(null);
@@ -184,7 +175,7 @@ client.on('message', async message => {
 
         const commands = {
             'help': {
-                'func': (commands) => helpers.helpHandler(channelID, userName, commands),
+                'func': (commands) => helpers.helpHandler(message, commands),
                 'description': 'Provides details and usage for all commands',
                 'usage': ['-help']
             },
@@ -194,7 +185,7 @@ client.on('message', async message => {
                 'usage': ['-hello']
             },
             'strat': {
-                'func': () => helpers.stratHandler(channelID, content, args),
+                'func': () => helpers.stratHandler(message, args),
                 'description': '',
                 'usage': ['-strat (map) [side] [locations]']
             },
@@ -204,26 +195,26 @@ client.on('message', async message => {
                 'usage': ['-weather']
             },
             'song': {
-                'func': () => music.playHandler(channelID, userID, args),
+                'func': () => music.playHandler(message, args),
                 'description': 'Provides details for provided song/video (will search YouTube)',
                 'usage': ['-song (song name | YouTube url)']
             },
             'yahn': {
                 'hidden': true,
-                'func': () => helpers.yahnHandler(channelID, args)
+                'func': () => helpers.yahnHandler(message, args)
             },
             'fish': {
-                'func': () => helpers.getFish(channelID),
+                'func': () => helpers.getFish(message),
                 'description': 'Find some fish',
                 'usage': ['fish']
             },
             'catch': {
-                'func': () => helpers.catchHandler(channelID, message, args),
+                'func': () => helpers.catchHandler(message, args),
                 'description': 'Catch a fish',
                 'usage': ['-catch (fish name)']
             },
             'leaderboard': {
-                'func': () => helpers.leaderboardHandler(channelID),
+                'func': () => helpers.leaderboardHandler(message),
                 'description': `See who's the best`,
                 'usage': ['-leaderboard']
             },
@@ -233,7 +224,7 @@ client.on('message', async message => {
                 'usage': ['-commsclear']
             },
             'channel': {
-                'func': () => helpers.channelHandler(channelMap, message, args),
+                'func': () => helpers.channelHandler(message, channelMap, args),
                 'description': `everyone get in here`,
                 'usage': [`-channel`]
             }
