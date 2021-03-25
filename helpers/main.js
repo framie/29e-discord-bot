@@ -1,22 +1,41 @@
-const XMLHttpRequest = require('xhr2')
 const Discord = require('discord.js');
+const fetch = require("node-fetch");
+const jsdom = require("jsdom");
+const fs = require('fs');
 
 class Helpers {
     constructor(client) {
         this.client = client;
+        this.currentFish = {
+            caught: true
+        }
+        this.userFile = './users.json';
+        this.userData = {};
+        this.getData();
     }
 
-    AJAX = (method, url, params = {}, cb = undefined, async = false) => {
-        const xmlHttp = new XMLHttpRequest();
-        let newUrl = url;
-        for (const [key, value] of Object.entries(params)) {
-            newUrl += `${ url.includes('?') ? '&' : '?' }${ key }=${ value }`;
-        }
-        xmlHttp.open(method, newUrl, async);
-        xmlHttp.send();
-        if (cb && typeof cb === 'function') cb(JSON.parse(xmlHttp.responseText));
-        return JSON.parse(xmlHttp.responseText);
+    getFormattedDate = () => {
+        const now = new Date();
+        return `${ now.getDate() }-${ now.getMonth() + 1 }-${ now.getFullYear() }`;
     }
+
+    getData = (() => {
+        const obj = this;
+        fs.readFile(this.userFile, 'utf8', (err, data) => {
+            if (err) {
+                throw err;
+            }
+            obj.userData = JSON.parse(data);
+        });
+    });
+
+    setData = (() => {
+        fs.writeFile(this.userFile, JSON.stringify(this.userData, null, 4), (err) => {
+            if (err) {
+                throw err;
+            }
+        });
+    });
 
     unescape = (string) => {
         return string.replace(/&#39;/g, '\'');
@@ -27,18 +46,168 @@ class Helpers {
     }
 
     sendEmbeddedMessage = (channelID, args = {}) => {
-        args.colour = args.colour || 3171297;
+        args.color = args.color || 3171297;
         const channel = this.client.channels.cache.get(channelID);
-        const message = new Discord.MessageEmbed();
-        args.colour && message.setColor(args.colour);
-        args.description && message.setDescription(args.description);
-        args.image && message.setImage(args.image);
-        channel.send(message);
+        console.log(args)
+        channel.send({embed: args});
     }
 
     sendMessage = (channelID, message) => {
         const channel = this.client.channels.cache.get(channelID);
         channel.send(message);
+    }
+
+    leaderboardHandler = (channelID) => {
+        const users = Object.keys(this.userData).map((key) => {
+            return {
+                name: this.userData[key].name,
+                fishCaught: this.userData[key].fishCaught ? this.userData[key].fishCaught : 0
+            };
+        });
+        users.sort((first, second) => {
+            return second.fishCaught - first.fishCaught;
+        });
+        this.sendEmbeddedMessage(channelID, {
+            title: 'Best fisherman of 29E Gaming',
+            fields: [
+                {
+                    name: '#1',
+                    value: `${ users[0].name }: ${ users[0].fishCaught }`,
+                },
+                {
+                    name: '#2',
+                    value: `${ users[1].name }: ${ users[1].fishCaught }`,
+                },
+                {
+                    name: '#3',
+                    value: `${ users[2].name }: ${ users[2].fishCaught }`,
+                },
+            ]
+        });
+    }
+
+    incrementUserAttr = (userID, userName, attrName, amount) => {
+        const today = this.getFormattedDate();
+        if (userID in this.userData) {
+            if (attrName in this.userData[userID]) {
+                this.userData[userID][attrName] = this.userData[userID][attrName] + amount;
+                if (today in this.userData[userID].days) {
+                    if (attrName in this.userData[userID].days[today]) {
+                        this.userData[userID].days[today][attrName] = this.userData[userID].days[today][attrName] + amount;
+                    } else {
+                        this.userData[userID].days[today][attrName] = amount;
+                    }
+                } else {
+                    this.userData[userID].days[today] = {
+                        [attrName]: amount
+                    }
+                }
+            } else {
+                this.userData[userID][attrName] = amount;
+                if (today in this.userData[userID].days) {
+                    this.userData[userID].days[today][attrName] = amount;
+                } else {
+                    this.userData[userID].days[today] = {
+                        [attrName]: amount
+                    }
+                }
+            }
+        } else {
+            this.userData[userID] = {
+                id: userID,
+                name: userName,
+                [attrName]: amount,
+                days: {
+                    [today]: {
+                        [attrName]: amount
+                    }
+                }
+            }
+        }
+        this.setData();
+    }
+
+    getFish = (channelID) => {
+        if (!this.currentFish.caught) {
+            if (!('name' in this.currentFish)) return;
+            this.sendEmbeddedMessage(channelID, {description: 'There is still a fish to catch', image: {url: this.currentFish.image}});
+            return;
+        }
+        const URL = 'https://www.generatormix.com/random-fish';
+        fetch(URL).then(res => res.text())
+        .then(text => {
+            const dom = new jsdom.JSDOM(text);
+            const output = dom.window.document.getElementById('output');
+            const fish = output.getElementsByClassName('tile-block-inner')[0];
+            const fishName = fish.getElementsByClassName('text-center')[0].textContent;
+            const fishImage = fish.getElementsByClassName('thumbnail')[0].getAttribute('data-src');
+            this.currentFish = {
+                name: fishName.split(' (')[0],
+                image: fishImage,
+                caught: false
+            }
+            console.log(`Now there's a ${ fishName.split(' (')[0] } to catch`);
+            this.sendEmbeddedMessage(channelID, {image: {url: fishImage}});
+        });
+    }
+
+    async catchHandler(channelID, message, args) {
+        const guildMember = message.channel.guild.members.cache.get(message.author.id);
+        const userName = guildMember.user.username;
+        const userID = guildMember.user.id;
+        if (this.currentFish.caught) {
+            this.sendEmbeddedMessage(channelID, {description: `There aren't any fish to catch right now`});
+            return;
+        } 
+
+        let quotaReached = false;
+        const dailyLimit = 5;
+        const today = this.getFormattedDate();
+        if (userID in this.userData &&
+            'days' in this.userData[userID] &&
+            today in this.userData[userID].days &&
+            'fishCaught' in this.userData[userID].days[today] && 
+            this.userData[userID].days[today].fishCaught >= dailyLimit) {
+            quotaReached = true;
+        } 
+        if (quotaReached) {
+            this.sendEmbeddedMessage(channelID, {
+                color: 0x0099ff,
+                title: 'Daily Fishing Quota Exceeded',
+                description: `You already reached the daily limit for fishing in New Zealand waters.
+                            \nPlease refer to the attached documentation in order to ascertain the limitations surrounding specific areas in the country.
+                            \nDue to these unprecedented circumstances I must henceforth remove you from the premises.
+                            \nKia kaha Aotearoa`,
+                url: `https://www.mpi.govt.nz/fishing-aquaculture/recreational-fishing/fishing-rules/`,
+                author: {
+                    name: `Jacinda Ardern (She/Her)`,
+                    icon_url: `https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/New_Zealand_Prime_Minister_Jacinda_Ardern_in_2018.jpg/220px-New_Zealand_Prime_Minister_Jacinda_Ardern_in_2018.jpg`,
+                    url: `https://en.wikipedia.org/wiki/Jacinda_Ardern`
+                },
+                timestamp: new Date(),
+                footer: {
+                    text: `Regards`
+                }
+            });
+            guildMember.voice.setChannel(null);
+        } else if (args.join(' ').toLowerCase() !== this.currentFish.name.toLowerCase()) {
+            this.sendEmbeddedMessage(channelID, {description: `you suck`}, true);
+        } else {
+            this.sendEmbeddedMessage(channelID, {description: `Congratulations, ${ userName }, you just caught a ${ this.currentFish.name }!`});
+            this.currentFish.caught = true;
+            const voiceChannelID = message.member.voice.channel;
+            if (voiceChannelID) {
+                const connection = await message.member.voice.channel.join();
+                const dispatcher = connection.play('./assets/mp3/jeff.mp3', {volume: 1});
+                dispatcher.on('finish', () => {
+                    dispatcher.destroy();
+                    message.member.voice.channel.leave();
+                    this.incrementUserAttr(userID, userName, 'fishCaught', 1);
+                });
+            } else {
+                this.incrementUserAttr(userID, userName, 'fishCaught', 1);
+            }
+        }
     }
 
     getStrat = (map, side = 't', locationCount = undefined) => {
@@ -119,19 +288,7 @@ class Helpers {
 
     helpHandler = (channelID, user, commands) => {
         console.log('commands', commands);
-        this.sendEmbeddedMessage(channelID, {description: `Fuck off go help yourself, ${ user }`});
-    }
-
-    ollysAssHandler = (channelID, message, userID) => {
-        if (message.toLowerCase() === '-put it in my ass') {
-            if (userID === '319733281476313088') {
-                this.sendEmbeddedMessage(channelID, {description: 'Anything for you, Olly :wink:'});
-            } else {
-                this.sendEmbeddedMessage(channelID, {description: 'Sorry but that\'s for Olly only :triumph:'});
-            }
-        } else if (message.toLowerCase() === '-put it in ollys ass' || message.toLowerCase() === '-put it in olly\'s ass') {
-            this.sendEmbeddedMessage(channelID, {description: 'I can definitely do that :wink:'});
-        }
+        this.sendEmbeddedMessage(channelID, {description: `Help yourself, ${ user }`});
     }
 
     yahnHandler = (channelID, args) => {
@@ -146,7 +303,7 @@ class Helpers {
         if (args.length && !isNaN(args[0])) index = parseInt(args[0]);
         if (index < 1) index = 1;
         else if (index > 5) index = 5;
-        this.sendEmbeddedMessage(channelID, {image: imageUrls[index - 1]});
+        this.sendEmbeddedMessage(channelID, {image: {url: imageUrls[index - 1]}});
     }
 
     getUserVoiceChannel = (channels, userID) => {
@@ -155,8 +312,30 @@ class Helpers {
             if (foundChannel) return true;
             if (userID in channel.members) foundChannel = channel;
         });
-        console.log('foundChannel', foundChannel);
         return foundChannel;
+    }
+
+    clearCommsHandler = (message, timeout = 2000) => {
+        const voiceChannelID = message.channel.guild.members.cache.get(message.author.id).voice;
+        if (!voiceChannelID) return;
+        message.channel.guild.members.cache.each(member => {
+            setTimeout(() => {
+                member.voice.setChannel(null);
+            }, timeout);
+            timeout += 2000;
+        });
+    }
+
+    channelHandler = (channelMap, message, args) => {
+        let channelID;
+        for (const [id, channel] of Object.entries(channelMap)) {
+            if (channel.name.toLowerCase().includes(args.join(' ').toLowerCase())) channelID = channel.id;
+        }
+        if (!channelID) return;
+        message.channel.guild.members.cache.each(member => {
+            member.voice.setChannel(channelID);
+        });
+        return;
     }
 
 }

@@ -18,6 +18,8 @@
   "homepage": "https://github.com/framie/29e-discord-bot#readme",
   "dependencies": {
     "discord.js": "^12.5.1",
-    "xhr2": "^0.2.0"
+    "fs": "0.0.1-security",
+    "jsdom": "^16.5.1",
+    "node-fetch": "^2.6.1"
   }
 }
