@@ -6,9 +6,9 @@ const Helpers = require('./main.js');
 const { resolve } = require('path');
 
 class Music {
-    constructor(bot) {
+    constructor(bot, helpers) {
         this.bot = bot;
-        this.helpers = new Helpers(bot);
+        this.helpers = helpers;
         this.queue = [];
     }
 

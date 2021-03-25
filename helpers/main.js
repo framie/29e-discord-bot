@@ -13,6 +13,10 @@ class Helpers {
         this.getData();
     }
 
+    getArgs = (message) => {
+        return message.content.toLowerCase().substring(1).split(' ').slice(1);
+    }
+
     titleCase = (str) => {
         return str[0].toUpperCase() + str.slice(1);
     }
@@ -336,14 +340,16 @@ class Helpers {
         return foundChannel;
     }
 
-    clearCommsHandler = (message, timeout = 2000) => {
+    clearCommsHandler = (message, timeout = 0) => {
+        const timeoutAmount = timeout || 1500;
+        timeout = timeout || timeoutAmount;
         const voiceChannelID = message.channel.guild.members.cache.get(message.author.id).voice;
         if (!voiceChannelID) return;
         message.channel.guild.members.cache.each(member => {
             setTimeout(() => {
                 member.voice.setChannel(null);
             }, timeout);
-            timeout += 2000;
+            timeout += timeoutAmount;
         });
     }
 

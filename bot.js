@@ -8,10 +8,11 @@ const client = new Discord.Client();
 client.login(auth.discord_token);
 
 const helpers = new Helpers(client);
-const music = new Music(client);
-const theme = new Theme(client);
+const music = new Music(client, helpers);
+const theme = new Theme(client, helpers);
 const channelMap = {};
 const userIDMap = {}
+let bot = {};
 
 client.once('ready', () => {
     console.log(`Connected. Logged in as: ${ client.user.username } - (${ client.user.id })`);
@@ -22,6 +23,21 @@ client.once('ready', () => {
             name: channel.name
         }
     });
+
+    client.guilds.cache.each(guild => {
+        guild.members.cache.each(member => {
+            userIDMap[member.id] = {
+                id: member.id,
+                userName: member.user.username,
+                nickName: member.nickname
+            }
+            if (member.user.username === '29E Bot') {
+                bot = userIDMap[member.id];
+                member.setNickname('29E Bot');
+                theme.setBot(bot);
+            }
+        });
+    });
 });
 
 // Bot message handler
@@ -30,7 +46,7 @@ client.on('message', async message => {
     const channelName = message.channel.name;
     const userName = message.author.username;
     const userID = message.author.id;
-    const content = message.content;
+    const content = message.content.toLowerCase();
     const guildMember = message.channel.guild.members.cache.get(userID);
 
     // console.log(`{ user: ${ userName }, userID: ${ userID }, channelID: ${ channelID }, channelName: ${ channelName }, content: ${ content } }`);
@@ -182,8 +198,9 @@ client.on('message', async message => {
         const command = content.substring(1).split(' ')[0];
 
         const commands = {
+            // General commands
             'help': {
-                'func': (commands) => helpers.helpHandler(message, commands),
+                'func': () => helpers.helpHandler(message, commands),
                 'description': 'Provides details and usage for all commands',
                 'usage': ['-help']
             },
@@ -192,39 +209,14 @@ client.on('message', async message => {
                 'description': 'Says hi',
                 'usage': ['-hello']
             },
-            'strat': {
-                'func': () => helpers.stratHandler(message, args),
-                'description': '',
-                'usage': ['-strat (map) [side] [locations]']
-            },
             'weather': {
                 'func': () => helpers.sendEmbeddedMessage(channelID, {description: 'It is raining in Johnsonville'}),
                 'description': 'Provides weather report for current location',
                 'usage': ['-weather']
             },
-            'song': {
-                'func': () => music.playHandler(message, args),
-                'description': 'Provides details for provided song/video (will search YouTube)',
-                'usage': ['-song (song name | YouTube url)']
-            },
             'yahn': {
                 'hidden': true,
                 'func': () => helpers.yahnHandler(message, args)
-            },
-            'fish': {
-                'func': () => helpers.getFish(message),
-                'description': 'Find some fish',
-                'usage': ['fish']
-            },
-            'catch': {
-                'func': () => helpers.catchHandler(message, args),
-                'description': 'Catch a fish',
-                'usage': ['-catch (fish name)']
-            },
-            'leaderboard': {
-                'func': () => helpers.leaderboardHandler(message),
-                'description': `See who's the best`,
-                'usage': ['-leaderboard']
             },
             'commsclear': {
                 'func': () => helpers.clearCommsHandler(message),
@@ -235,10 +227,50 @@ client.on('message', async message => {
                 'func': () => helpers.channelHandler(message, channelMap, args),
                 'description': `everyone get in here`,
                 'usage': [`-channel`]
+            },
+
+
+
+            // CS:GO commands
+            'strat': {
+                'func': () => helpers.stratHandler(message, args),
+                'description': '',
+                'usage': ['-strat (map) [side] [locations]']
+            },
+
+
+
+            // Fishing commands
+            'catch': {
+                'func': () => helpers.catchHandler(message, args),
+                'type': 'fishing',
+                'description': 'Catch a fish',
+                'usage': ['-catch (fish name)']
+            },
+            'fish': {
+                'func': () => helpers.getFish(message),
+                'type': 'fishing',
+                'description': 'Find some fish',
+                'usage': ['fish']
+            },
+            'leaderboard': {
+                'func': () => helpers.leaderboardHandler(message),
+                'type': 'fishing',
+                'description': `See who's the best`,
+                'usage': ['-leaderboard']
+            },
+
+            
+
+            // Music/sound commands
+            'song': {
+                'func': () => music.playHandler(message, args),
+                'description': 'Provides details for provided song/video (will search YouTube)',
+                'usage': ['-song (song name | YouTube url)']
             }
         }
 
-        if (command.toLowerCase() in commands) commands[command.toLowerCase()].func(commands);
+        if (command.toLowerCase() in commands) commands[command.toLowerCase()].func();
         else if (channelID === '733306905908477962') helpers.sendEmbeddedMessage(channelID, {description: 'Invalid input. Type `-help` for a list of commands'});
 
     }

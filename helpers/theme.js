@@ -2,12 +2,18 @@ const fs = require('fs');
 const Helpers = require('./main.js');
 
 class Theme {
-    constructor(bot) {
-        this.bot = bot;
-        this.helpers = new Helpers(bot);
+    constructor(client, helpers) {
+        this.client = client;
+        this.helpers = helpers;
         this.names = ['adjective', 'genre', 'person', 'theme', 'verb']
-        this.isLoading = this.names.length;
+        this.isLoading = this.names.length + 1;
         this.getData(this.names);
+        this.currentTheme;
+    }
+
+    setBot = (bot) => {
+        this.bot = bot;
+        this.isLoading -= 1;
     }
 
     getData = (names = []) => {
@@ -44,12 +50,22 @@ class Theme {
     }
 
     themeHandler = (message) => {
+        const args = this.helpers.getArgs(message);
         const channelID = message.channel.id;
         if (this.isLoading) {
             this.helpers.sendEmbeddedMessage(channelID, {description: 'Themes currently loading'});
             return;
         }
-        this.helpers.sendEmbeddedMessage(channelID, {description: this.getTheme()});
+        if (args.length === 0) {
+            if (this.currentTheme) {
+                this.helpers.sendEmbeddedMessage(channelID, {description: `The current theme is \`${ this.currentTheme}\``});
+            } else {
+                this.helpers.sendEmbeddedMessage(channelID, {description: 'There is no current theme. Type `-theme new` to generate a new theme'});
+            }
+        } else if (args[0] === 'new') {
+            this.currentTheme = this.getTheme();
+            this.helpers.sendEmbeddedMessage(channelID, {description: `The current theme is \`${ this.currentTheme}\``});
+        }
     }
 }
 
