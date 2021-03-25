@@ -1,4 +1,3 @@
-const Discord = require('discord.js');
 const fetch = require('node-fetch');
 const jsdom = require('jsdom');
 const fs = require('fs');
@@ -14,9 +13,23 @@ class Helpers {
         this.getData();
     }
 
+    titleCase = (str) => {
+        return str[0].toUpperCase() + str.slice(1);
+    }
+
     getFormattedDate = () => {
         const now = new Date();
         return `${ now.getDate() }-${ now.getMonth() + 1 }-${ now.getFullYear() }`;
+    }
+
+    getRand = (arr, remove = false) => {
+        const index = Math.floor(Math.random() * arr.length);
+        const rand = arr[index];
+        if (remove) {
+            arr.splice(index, 1);
+            return arr, rand;
+        }
+        return rand;
     }
 
     getData = (() => {

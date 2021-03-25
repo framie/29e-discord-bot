@@ -2,12 +2,14 @@ const Discord = require('discord.js');
 const auth = require('./auth.json');
 const Helpers = require('./helpers/main.js');
 const Music = require('./helpers/music.js');
+const Theme = require('./helpers/theme.js');
 
 const client = new Discord.Client();
 client.login(auth.discord_token);
 
 const helpers = new Helpers(client);
 const music = new Music(client);
+const theme = new Theme(client);
 const channelMap = {};
 const userIDMap = {}
 
@@ -61,6 +63,12 @@ client.on('message', async message => {
         ];
         const index = Math.floor(Math.random() * options.length);
         helpers.sendEmbeddedMessage(channelID, {description: options[index]});
+        return;
+    }
+
+    if (content.split(' ')[0] === '-theme') {
+        theme.themeHandler(message);
+        return;
     }
 
     if (content === '-jeff') {
