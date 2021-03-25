@@ -14,6 +14,16 @@ const channelMap = {};
 const userIDMap = {}
 let bot = {};
 
+// 1 minute = 60000
+
+const fishDelay = {
+    messages: 0,
+    time: new Date().getTime(),
+    messageThreshold: 50,
+    timeThreshold: 60000 * 5
+}
+// fishDelay.time -= fishDelay.timeThreshold;
+
 client.once('ready', () => {
     console.log(`Connected. Logged in as: ${ client.user.username } - (${ client.user.id })`);
 
@@ -48,11 +58,22 @@ client.on('message', async message => {
     const userID = message.author.id;
     const content = message.content.toLowerCase();
     const guildMember = message.channel.guild.members.cache.get(userID);
+    const now = new Date();
 
-    // console.log(`{ user: ${ userName }, userID: ${ userID }, channelID: ${ channelID }, channelName: ${ channelName }, content: ${ content } }`);
+    console.log(`{ user: ${ userName }, userID: ${ userID }, channelID: ${ channelID }, channelName: ${ channelName }, content: ${ content } }`);
     // console.log(client.channels.cache.get('720451534894399520'));
     // console.log(message.channel.guild.members.cache.get(userID).voice.serverMute = true);
     // console.log(client.users);
+
+    fishDelay.messages += 1;
+    const fishMessages = fishDelay.messageThreshold - fishDelay.messages;
+    const fishTime = (fishDelay.time - now.getTime() + fishDelay.timeThreshold) / 60000;
+    console.log(`${ fishMessages > 0 ? fishMessages : 0 } messages and ${ fishTime > 0 ? fishTime.toFixed(2) : 0 } minutes until a new fish`);
+    if (fishMessages <= 0 && fishTime <= 0) {
+        fishDelay.messages = 0;
+        fishDelay.time = now.getTime();
+        helpers.getFish(message, true);
+    }
 
     if (content.split(' ')[0] === '-ask') {
         const options = [
@@ -248,7 +269,12 @@ client.on('message', async message => {
                 'usage': ['-catch (fish name)']
             },
             'fish': {
-                'func': () => helpers.getFish(message),
+                'hidden': true,
+                'func': () => {
+                    fishDelay.messages = 0;
+                    fishDelay.time = now.getTime();
+                    helpers.getFish(message, userName === 'chiwa' && args[0] === 'new')
+                },
                 'type': 'fishing',
                 'description': 'Find some fish',
                 'usage': ['fish']

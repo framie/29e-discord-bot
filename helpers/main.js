@@ -65,7 +65,6 @@ class Helpers {
     sendEmbeddedMessage = (channelID, args = {}) => {
         args.color = args.color || 3171297;
         const channel = this.client.channels.cache.get(channelID);
-        console.log(args)
         channel.send({embed: args});
     }
 
@@ -145,11 +144,14 @@ class Helpers {
         this.setData();
     }
 
-    getFish = (message) => {
+    getFish = (message, update = false) => {
         const channelID = message.channel.id;
-        if (!this.currentFish.caught) {
-            if (!('name' in this.currentFish)) return;
-            this.sendEmbeddedMessage(channelID, {description: 'There is still a fish to catch', image: {url: this.currentFish.image}});
+        if (!update) {
+            if (!('name' in this.currentFish) || this.currentFish.caught) {
+                this.sendEmbeddedMessage(channelID, {description: 'There aren\'t any fish around'});
+            } else {
+                this.sendEmbeddedMessage(channelID, {description: 'There is still a fish to catch', image: {url: this.currentFish.image}});
+            }
             return;
         }
         const URL = 'https://www.generatormix.com/random-fish';
@@ -165,7 +167,7 @@ class Helpers {
                 image: fishImage,
                 caught: false
             }
-            console.log(`Now there's a ${ fishName.split(' (')[0] } to catch`);
+            console.log(`Now there's a "${ fishName.split(' (')[0] }" to catch`);
             this.sendEmbeddedMessage(channelID, {image: {url: fishImage}});
         });
     }
