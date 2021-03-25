@@ -110,6 +110,11 @@ client.on('message', async message => {
         return;
     }
 
+    if (content === '-unmuteme') {
+        message.channel.guild.members.cache.get(userID).voice.setMute(false);
+        return;
+    }
+
     if (content === '-muteme') {
         message.channel.guild.members.cache.get(userID).voice.setMute(true);
         return;
