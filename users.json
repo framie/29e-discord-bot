@@ -2,23 +2,26 @@
     "129914751273795584": {
         "id": "129914751273795584",
         "name": "chiwa",
-        "fishCaught": 10,
+        "fishCaught": 12,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
             },
             "26-3-2021": {
-                "fishCaught": 2
+                "fishCaught": 4
             }
         }
     },
     "196692030188027904": {
         "id": "196692030188027904",
         "name": "AuntyJacinda",
-        "fishCaught": 5,
+        "fishCaught": 6,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
+            },
+            "26-3-2021": {
+                "fishCaught": 1
             }
         }
     },
@@ -45,10 +48,13 @@
     "319733281476313088": {
         "id": "319733281476313088",
         "name": "NaggerFlip",
-        "fishCaught": 5,
+        "fishCaught": 6,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
+            },
+            "26-3-2021": {
+                "fishCaught": 1
             }
         }
     },

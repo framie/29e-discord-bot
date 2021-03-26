@@ -113,7 +113,27 @@ class Theme {
         } else if (args[0] === 'admin') {
             if (!(this.admins.includes(userName))) return;
             this.helpers.sendEmbeddedDM(userID, {
-                title: 'Theme admin panel' 
+                title: 'Theme admin panel',
+                description: 'Below is some information regarding theme configuration',
+                fields: [
+                    { 
+                        name: '\u200B',
+                        value: '\u200B'
+                    },
+                    {
+                        name: 'Variable names',
+                        value: this.names.map(name => '`' + this.helpers.titleCase(name) + '`').join(', '),
+                    },
+                    { 
+                        name: '\u200B',
+                        value: '\u200B'
+                    },
+                    {
+                        name: 'List command',
+                        value: `\`-theme list [Variable]\` - will output all saved values for a particular variable
+                                \n For example, run \`-theme list Adjective\` to list all saved adjectives`
+                    }
+                ]
             });
         }
     }

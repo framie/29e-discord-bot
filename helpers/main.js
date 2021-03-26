@@ -235,11 +235,13 @@ class Helpers {
             this.currentFish.caught = true;
             const voiceChannelID = message.member.voice.channel;
             if (voiceChannelID) {
+                this.changeNickname('29E Bot', 'Jeff');
                 const connection = await message.member.voice.channel.join();
                 const dispatcher = connection.play('./assets/mp3/jeff.mp3', {volume: 1});
                 dispatcher.on('finish', () => {
                     dispatcher.destroy();
                     message.member.voice.channel.leave();
+                    this.changeNickname('29E Bot');
                     this.incrementUserAttr(userID, userName, 'fishCaught', 1);
                 });
             } else {

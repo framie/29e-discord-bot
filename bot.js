@@ -26,6 +26,7 @@ const fishDelay = {
     timeThreshold: 60000 * 5
 }
 // fishDelay.time -= fishDelay.timeThreshold;
+// fishDelay.messages += fishDelay.messageThreshold;
 
 client.once('ready', () => {
     console.log(`Connected. Logged in as: ${ client.user.username } - (${ client.user.id })`);
@@ -129,11 +130,42 @@ client.on('message', async message => {
         return;
     }
 
+    if (content === '-lol') {
+        const voiceChannelID = message.member.voice.channel;
+        if (voiceChannelID) {
+            helpers.changeNickname('29E Bot', 'LOL');
+            const connection = await message.member.voice.channel.join();
+            const dispatcher = connection.play('assets/mp3/laugh.mp3', {volume: 1});
+            dispatcher.on('finish', () => {
+                dispatcher.destroy();
+                message.member.voice.channel.leave();
+                helpers.changeNickname('29E Bot');
+            });
+        }
+        return;
+    }
+
+    if (content === '-stinky') {
+        const voiceChannelID = message.member.voice.channel;
+        if (voiceChannelID) {
+            helpers.changeNickname('29E Bot', 'monke');
+            const connection = await message.member.voice.channel.join();
+            const dispatcher = connection.play('assets/mp3/stinky2.mp3', {volume: 1});
+            dispatcher.on('finish', () => {
+                dispatcher.destroy();
+                message.member.voice.channel.leave();
+                helpers.changeNickname('29E Bot');
+            });
+        }
+        return;
+    }
+
+
     if (content === '-jeff') {
         const voiceChannelID = message.member.voice.channel;
         if (voiceChannelID) {
-            const connection = await message.member.voice.channel.join();
             helpers.changeNickname('29E Bot', 'Jeff');
+            const connection = await message.member.voice.channel.join();
             const dispatcher = connection.play('assets/mp3/jeff.mp3', {volume: 1});
             dispatcher.on('finish', () => {
                 dispatcher.destroy();
@@ -147,8 +179,8 @@ client.on('message', async message => {
     if (content === '-racism') {
         const voiceChannelID = message.member.voice.channel;
         if (voiceChannelID) {
-            const connection = await message.member.voice.channel.join();
             helpers.changeNickname('29E Bot', 'David Guetta');
+            const connection = await message.member.voice.channel.join();
             const dispatcher = connection.play('assets/mp3/racism.mp3', {volume: 1});
             dispatcher.on('finish', () => {
                 dispatcher.destroy();
@@ -162,8 +194,8 @@ client.on('message', async message => {
     if (content === '-11') {
         const voiceChannelID = message.member.voice.channel;
         if (voiceChannelID) {
-            const connection = await message.member.voice.channel.join();
             helpers.changeNickname('29E Bot', 'Monk');
+            const connection = await message.member.voice.channel.join();
             const dispatcher = connection.play('assets/mp3/wololo.mp3', {volume: 1});
             dispatcher.on('finish', () => {
                 dispatcher.destroy();
@@ -241,6 +273,30 @@ client.on('message', async message => {
 
     if (content === '-muteme') {
         message.channel.guild.members.cache.get(userID).voice.setMute(true);
+        return;
+    }
+
+    if (content === '-silenceolly') {
+        return;
+        client.guilds.cache.each(guild => {
+            guild.members.cache.each(member => {
+                if (member.user.username === 'NaggerFlip') {
+                    member.voice.setMute(true);
+                }
+            });
+        });
+        return;
+    }
+
+    if (content === '-kickolly') {
+        return;
+        client.guilds.cache.each(guild => {
+            guild.members.cache.each(member => {
+                if (member.user.username === 'NaggerFlip') {
+                    member.voice.setChannel(null);
+                }
+            });
+        });
         return;
     }
 
