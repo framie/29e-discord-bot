@@ -21,6 +21,7 @@
     "fs": "0.0.1-security",
     "jsdom": "^16.5.1",
     "node-fetch": "^2.6.1",
+    "opusscript": "0.0.8",
     "ytdl-core": "^4.5.0"
   }
 }

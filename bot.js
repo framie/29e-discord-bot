@@ -11,7 +11,10 @@ const helpers = new Helpers(client);
 const music = new Music(client, helpers);
 const theme = new Theme(client, helpers);
 const channelMap = {};
-const userIDMap = {}
+const userIDMap = {};
+const admins = [
+    'chiwa'
+];
 let bot = {};
 
 // 1 minute = 60000
@@ -19,7 +22,7 @@ let bot = {};
 const fishDelay = {
     messages: 0,
     time: new Date().getTime(),
-    messageThreshold: 50,
+    messageThreshold: 20,
     timeThreshold: 60000 * 5
 }
 // fishDelay.time -= fishDelay.timeThreshold;
@@ -52,6 +55,15 @@ client.once('ready', () => {
 
 // Bot message handler
 client.on('message', async message => {
+
+    if (message.channel.type === 'dm') {
+        const userName = message.author.username;
+        const userID = message.author.id;
+        const content = message.content.toLowerCase();
+        console.log(`DM: { user: ${ userName }, userID: ${ userID }, content: ${ content } }`);
+        return;
+    }
+
     const channelID = message.channel.id;
     const channelName = message.channel.name;
     const userName = message.author.username;
@@ -60,7 +72,7 @@ client.on('message', async message => {
     const guildMember = message.channel.guild.members.cache.get(userID);
     const now = new Date();
 
-    console.log(`{ user: ${ userName }, userID: ${ userID }, channelID: ${ channelID }, channelName: ${ channelName }, content: ${ content } }`);
+    console.log(`Message: { user: ${ userName }, userID: ${ userID }, channelID: ${ channelID }, channelName: ${ channelName }, content: ${ content } }`);
     // console.log(client.channels.cache.get('720451534894399520'));
     // console.log(message.channel.guild.members.cache.get(userID).voice.serverMute = true);
     // console.log(client.users);
@@ -112,10 +124,12 @@ client.on('message', async message => {
         const voiceChannelID = message.member.voice.channel;
         if (voiceChannelID) {
             const connection = await message.member.voice.channel.join();
+            helpers.changeNickname('29E Bot', 'Jeff');
             const dispatcher = connection.play('assets/mp3/jeff.mp3', {volume: 1});
             dispatcher.on('finish', () => {
                 dispatcher.destroy();
                 message.member.voice.channel.leave();
+                helpers.changeNickname('29E Bot');
             });
         }
         return;
@@ -125,10 +139,12 @@ client.on('message', async message => {
         const voiceChannelID = message.member.voice.channel;
         if (voiceChannelID) {
             const connection = await message.member.voice.channel.join();
+            helpers.changeNickname('29E Bot', 'David Guetta');
             const dispatcher = connection.play('assets/mp3/racism.mp3', {volume: 1});
             dispatcher.on('finish', () => {
                 dispatcher.destroy();
                 message.member.voice.channel.leave();
+                helpers.changeNickname('29E Bot');
             });
         }
         return;
@@ -138,12 +154,24 @@ client.on('message', async message => {
         const voiceChannelID = message.member.voice.channel;
         if (voiceChannelID) {
             const connection = await message.member.voice.channel.join();
+            helpers.changeNickname('29E Bot', 'Monk');
             const dispatcher = connection.play('assets/mp3/wololo.mp3', {volume: 1});
             dispatcher.on('finish', () => {
                 dispatcher.destroy();
                 message.member.voice.channel.leave();
+                helpers.changeNickname('29E Bot');
             });
         }
+        return;
+    }
+
+
+    console.log(content.slice(0, 9), content.slice(0, 9) === '-nickname');
+    if (content.slice(0, 9) === '-nickname') {
+        const args = message.content.substring(1).split(' ').slice(1);
+        if (args.length === 0) return;
+        const name = args[0].toLowerCase() === 'bot' ? '29E Bot' : args[0];
+        helpers.changeNickname(name, args.slice(1).join(' '));
         return;
     }
 
@@ -273,7 +301,7 @@ client.on('message', async message => {
                 'func': () => {
                     fishDelay.messages = 0;
                     fishDelay.time = now.getTime();
-                    helpers.getFish(message, userName === 'chiwa' && args[0] === 'new')
+                    helpers.getFish(message, admins.includes(userName) && args[0] === 'new')
                 },
                 'type': 'fishing',
                 'description': 'Find some fish',

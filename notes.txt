@@ -3,8 +3,7 @@ nodemon bot.js
 https://leovoel.github.io/embed-visualizer/
 
 tell jokes
-theme gives an adjective/genre for music
-moves everyone to a channel
 mute everyone and play a song
 playlist saver
 random fish size and leaderboard for biggest fish
+vote kick similar to cs

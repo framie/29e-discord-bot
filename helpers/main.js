@@ -54,6 +54,16 @@ class Helpers {
         });
     });
 
+    changeNickname = (userName, nickname = null) => {
+        this.client.guilds.cache.each(guild => {
+            guild.members.cache.each(member => {
+                if (userName && member.user.username.toLowerCase() === userName.toLowerCase()) {
+                    member.setNickname(nickname);
+                }
+            });
+        });
+    }
+
     unescape = (string) => {
         return string.replace(/&#39;/g, '\'');
     }
@@ -62,6 +72,12 @@ class Helpers {
         return true;
     }
 
+    sendEmbeddedDM = (userID, args = {}) => {
+        args.color = args.color || 3171297;
+        const user = this.client.users.cache.get(userID);
+        user.send({embed: args});
+    }
+    
     sendEmbeddedMessage = (channelID, args = {}) => {
         args.color = args.color || 3171297;
         const channel = this.client.channels.cache.get(channelID);
