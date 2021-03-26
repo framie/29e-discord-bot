@@ -61,6 +61,15 @@ client.on('message', async message => {
         const userID = message.author.id;
         const content = message.content.toLowerCase();
         console.log(`DM: { user: ${ userName }, userID: ${ userID }, content: ${ content } }`);
+
+        if (content.split(' ')[0] === '-theme') {
+            theme.dmHandler(message);
+            return;
+        }
+
+        if (content[0] === '-') {
+            helpers.sendEmbeddedDM(userID, {description: 'Unrecognised command'});
+        }
         return;
     }
 
@@ -165,8 +174,6 @@ client.on('message', async message => {
         return;
     }
 
-
-    console.log(content.slice(0, 9), content.slice(0, 9) === '-nickname');
     if (content.slice(0, 9) === '-nickname') {
         const args = message.content.substring(1).split(' ').slice(1);
         if (args.length === 0) return;

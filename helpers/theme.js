@@ -5,19 +5,28 @@ class Theme {
     constructor(client, helpers) {
         this.client = client;
         this.helpers = helpers;
-        this.names = ['adjective', 'genre', 'person', 'theme', 'verb']
-        this.isLoading = this.names.length + 1;
-        this.getData(this.names);
-        this.currentTheme;
+        this.currentTheme = undefined;
         this.admins = [
             'AuntyJacinda',
             'chiwa'
         ];
+        this.initData();
     }
 
     setBot = (bot) => {
         this.bot = bot;
-        this.isLoading -= 1;
+    }
+
+    initData = () => {
+        const names = [];
+        fs.readFile(`./assets/theme/names.txt`, 'utf8', (_, data) => {
+            data.trim().split('\n').forEach(line => {
+                if (line && line.trim()) names.push(line.trim().toLowerCase());
+            });
+            this.names = names;
+            this.isLoading = names.length;
+            this.getData(names);
+        });
     }
 
     getData = (names = []) => {
@@ -55,6 +64,34 @@ class Theme {
         return theme;
     }
 
+    dmHandler = (message) => {
+        const userID = message.author.id;
+        console.log(this.names)
+        this.helpers.sendEmbeddedDM(userID, {
+            title: 'Theme admin panel',
+            description: 'Below is some information regarding theme configuration',
+            fields: [
+                { 
+                    name: '\u200B',
+                    value: '\u200B'
+                },
+                {
+                    name: 'Variable names',
+                    value: this.names.map(name => '`' + this.helpers.titleCase(name) + '`').join(', '),
+                },
+                { 
+                    name: '\u200B',
+                    value: '\u200B'
+                },
+                {
+                    name: 'List command',
+                    value: `\`-theme list [Variable]\` - will output all saved values for a particular variable
+                            \n For example, run \`-theme list Adjective\` to list all saved adjectives`
+                }
+            ]
+        });
+    }
+
     themeHandler = (message) => {
         const args = this.helpers.getArgs(message);
         const channelID = message.channel.id;
@@ -75,7 +112,9 @@ class Theme {
             this.helpers.sendEmbeddedMessage(channelID, {description: `The current theme is \`${ this.currentTheme}\``});
         } else if (args[0] === 'admin') {
             if (!(this.admins.includes(userName))) return;
-            this.helpers.sendEmbeddedDM(userID, {description: `Hi admin`});
+            this.helpers.sendEmbeddedDM(userID, {
+                title: 'Theme admin panel' 
+            });
         }
     }
 }
