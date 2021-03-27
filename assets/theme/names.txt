@@ -1,5 +1,8 @@
 Adjective
+Band
 Genre
+Location
 Person
+Random
 Theme
 Verb

@@ -328,7 +328,7 @@ client.on('message', async message => {
             },
             'yahn': {
                 'hidden': true,
-                'func': () => helpers.yahnHandler(message, args)
+                'func': () => helpers.yahnHandler(message)
             },
             'commsclear': {
                 'func': () => helpers.clearCommsHandler(message),
@@ -336,7 +336,7 @@ client.on('message', async message => {
                 'usage': ['-commsclear']
             },
             'channel': {
-                'func': () => helpers.channelHandler(message, channelMap, args),
+                'func': () => helpers.channelHandler(message, channelMap),
                 'description': `everyone get in here`,
                 'usage': [`-channel`]
             },
@@ -345,7 +345,7 @@ client.on('message', async message => {
 
             // CS:GO commands
             'strat': {
-                'func': () => helpers.stratHandler(message, args),
+                'func': () => helpers.stratHandler(message),
                 'description': '',
                 'usage': ['-strat (map) [side] [locations]']
             },
@@ -354,7 +354,7 @@ client.on('message', async message => {
 
             // Fishing commands
             'catch': {
-                'func': () => helpers.catchHandler(message, args),
+                'func': () => helpers.catchHandler(message),
                 'type': 'fishing',
                 'description': 'Catch a fish',
                 'usage': ['-catch (fish name)']

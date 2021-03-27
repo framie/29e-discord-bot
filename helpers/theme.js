@@ -64,13 +64,11 @@ class Theme {
         return theme;
     }
 
-    dmHandler = (message) => {
-        const userID = message.author.id;
-        console.log(this.names)
+    sendCommands = (userID) => {
         this.helpers.sendEmbeddedDM(userID, {
             title: 'Theme admin panel',
             description: 'Below is some information regarding theme configuration',
-            fields: [
+            fields: [ 
                 { 
                     name: '\u200B',
                     value: '\u200B'
@@ -87,9 +85,46 @@ class Theme {
                     name: 'List command',
                     value: `\`-theme list [Variable]\` - will output all saved values for a particular variable
                             \n For example, run \`-theme list Adjective\` to list all saved adjectives`
+                },
+                { 
+                    name: '\u200B',
+                    value: '\u200B'
+                },
+                {
+                    name: 'Add command',
+                    value: `\`-theme add [Variable] [Value]\` - will add the input value to the variable
+                            \n For example, run \`-theme add Person chiwa\` to add chiwa to the list of people`
+                },
+                { 
+                    name: '\u200B',
+                    value: '\u200B'
+                },
+                {
+                    name: 'Remove command',
+                    value: `\`-theme remove [Variable] [Value]\` - will remove the input value from the variable
+                            \n For example, run \`-theme remove Verb wanking\` to remove wanking from the list of verbs`
                 }
             ]
         });
+    }
+
+    dmHandler = (message) => {
+        const args = message.content.toLowerCase().substring(1).split(' ').slice(1);
+        const userID = message.author.id;
+
+        if (args[0] === 'list') {
+            const items = this[`${ args[1] }s`];
+            const embed = {
+                description: 'Invalid input, please try again'
+            }
+            if (items && items.length) {
+                embed.description = items.sort().join('\n');
+                embed.title = `List of all ${this.helpers.titleCase(args[1]) }s`
+            }
+            this.helpers.sendEmbeddedDM(userID, embed);
+            return;
+        }
+        this.sendCommands(userID);
     }
 
     themeHandler = (message) => {
@@ -112,29 +147,7 @@ class Theme {
             this.helpers.sendEmbeddedMessage(channelID, {description: `The current theme is \`${ this.currentTheme}\``});
         } else if (args[0] === 'admin') {
             if (!(this.admins.includes(userName))) return;
-            this.helpers.sendEmbeddedDM(userID, {
-                title: 'Theme admin panel',
-                description: 'Below is some information regarding theme configuration',
-                fields: [
-                    { 
-                        name: '\u200B',
-                        value: '\u200B'
-                    },
-                    {
-                        name: 'Variable names',
-                        value: this.names.map(name => '`' + this.helpers.titleCase(name) + '`').join(', '),
-                    },
-                    { 
-                        name: '\u200B',
-                        value: '\u200B'
-                    },
-                    {
-                        name: 'List command',
-                        value: `\`-theme list [Variable]\` - will output all saved values for a particular variable
-                                \n For example, run \`-theme list Adjective\` to list all saved adjectives`
-                    }
-                ]
-            });
+            this.sendCommands(userID);
         }
     }
 }

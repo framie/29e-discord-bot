@@ -72,16 +72,16 @@ class Helpers {
         return true;
     }
 
-    sendEmbeddedDM = (userID, args = {}) => {
-        args.color = args.color || 3171297;
+    sendEmbeddedDM = (userID, embed = {}) => {
+        embed.color = embed.color || 3171297;
         const user = this.client.users.cache.get(userID);
-        user.send({embed: args});
+        user.send({embed});
     }
     
-    sendEmbeddedMessage = (channelID, args = {}) => {
-        args.color = args.color || 3171297;
+    sendEmbeddedMessage = (channelID, embed = {}) => {
+        embed.color = embed.color || 3171297;
         const channel = this.client.channels.cache.get(channelID);
-        channel.send({embed: args});
+        channel.send({embed});
     }
 
     sendMessage = (channelID, message) => {
@@ -188,7 +188,8 @@ class Helpers {
         });
     }
 
-    async catchHandler(message, args) {
+    async catchHandler(message) {
+        const args = message.content.substring(1).split(' ').slice(1);
         const channelID = message.channel.id;
         const guildMember = message.channel.guild.members.cache.get(message.author.id);
         const userName = guildMember.user.username;
@@ -320,7 +321,8 @@ class Helpers {
         return '';
     }
 
-    stratHandler = (message, args) => {
+    stratHandler = (message) => {
+        const args = message.content.substring(1).split(' ').slice(1);
         const channelID = message.channel.id;
         const content = message.content;
         let strat = 'Please enter a map name : `dust`, `inferno`, `mirage`';
@@ -335,7 +337,8 @@ class Helpers {
         this.sendEmbeddedMessage(channelID, {description: `Help yourself, ${ userName }`});
     }
 
-    yahnHandler = (message, args) => {
+    yahnHandler = (message) => {
+        const args = message.content.substring(1).split(' ').slice(1);
         const channelID = message.channel.id;
         const imageUrls = [
             'https://i.imgur.com/mpO8i9d.jpg',
@@ -373,8 +376,9 @@ class Helpers {
         });
     }
 
-    channelHandler = (message, channelMap, args) => {
+    channelHandler = (message, channelMap) => {
         let channelID;
+        const args = message.content.substring(1).split(' ').slice(1);
         for (const [id, channel] of Object.entries(channelMap)) {
             if (channel.name.toLowerCase().includes(args.join(' ').toLowerCase())) channelID = channel.id;
         }

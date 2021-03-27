@@ -2,3 +2,6 @@ Songs you sing while [Verb]
 [Adjective] [Genre]
 Songs [Person] listens to while [Verb]
 [Adjective] Music
+Songs about [Random]
+Songs by [Band]
+Songs you'd hear at a [Location]
