@@ -362,9 +362,12 @@ client.on('message', async message => {
             'fish': {
                 'hidden': true,
                 'func': () => {
-                    fishDelay.messages = 0;
-                    fishDelay.time = now.getTime();
-                    helpers.getFish(message, admins.includes(userName) && args[0] === 'new')
+                    const update = admins.includes(userName) && args[0] === 'new';
+                    if (update) {
+                        fishDelay.messages = 0;
+                        fishDelay.time = now.getTime();
+                    }
+                    helpers.getFish(message, update)
                 },
                 'type': 'fishing',
                 'description': 'Find some fish',
