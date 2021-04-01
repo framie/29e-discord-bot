@@ -63,6 +63,26 @@ client.on('message', async message => {
         const content = message.content.toLowerCase();
         console.log(`DM: { user: ${ userName }, userID: ${ userID }, content: ${ content } }`);
 
+        if (content.split(' ')[0] === '-say') {
+            client.channels.cache.each(channel => {
+                if (channel.name === 'shitchat') {
+                    const message = content.slice(5);
+                    helpers.sendMessage(channel.id, message);
+                }
+            });
+            return;
+        }
+
+        if (content.split(' ')[0] === '-embed') {
+            client.channels.cache.each(channel => {
+                if (channel.name === 'shitchat') {
+                    const message = content.slice(5);
+                    helpers.sendEmbeddedMessage(channel.id, {description: message});
+                }
+            });
+            return;
+        }
+
         if (content.split(' ')[0] === '-theme') {
             theme.dmHandler(message);
             return;
@@ -159,7 +179,6 @@ client.on('message', async message => {
         }
         return;
     }
-
 
     if (content === '-jeff') {
         const voiceChannelID = message.member.voice.channel;

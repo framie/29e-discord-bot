@@ -2,7 +2,7 @@
     "129914751273795584": {
         "id": "129914751273795584",
         "name": "chiwa",
-        "fishCaught": 14,
+        "fishCaught": 15,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -12,13 +12,16 @@
             },
             "27-3-2021": {
                 "fishCaught": 2
+            },
+            "31-3-2021": {
+                "fishCaught": 1
             }
         }
     },
     "196692030188027904": {
         "id": "196692030188027904",
         "name": "AuntyJacinda",
-        "fishCaught": 11,
+        "fishCaught": 12,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -31,16 +34,22 @@
             },
             "29-3-2021": {
                 "fishCaught": 2
+            },
+            "30-3-2021": {
+                "fishCaught": 1
             }
         }
     },
     "275025115660550144": {
         "id": "275025115660550144",
         "name": "LewisLitt",
-        "fishCaught": 5,
+        "fishCaught": 8,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
+            },
+            "30-3-2021": {
+                "fishCaught": 3
             }
         }
     },
@@ -57,7 +66,7 @@
     "319733281476313088": {
         "id": "319733281476313088",
         "name": "NaggerFlip",
-        "fishCaught": 10,
+        "fishCaught": 12,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -73,16 +82,22 @@
             },
             "29-3-2021": {
                 "fishCaught": 2
+            },
+            "30-3-2021": {
+                "fishCaught": 2
             }
         }
     },
     "255254301566435330": {
         "id": "255254301566435330",
         "name": "Strider",
-        "fishCaught": 3,
+        "fishCaught": 4,
         "days": {
             "25-3-2021": {
                 "fishCaught": 3
+            },
+            "31-3-2021": {
+                "fishCaught": 1
             }
         }
     },
@@ -99,13 +114,16 @@
     "737576836497670164": {
         "id": "737576836497670164",
         "name": "TentnQuarantino",
-        "fishCaught": 7,
+        "fishCaught": 8,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
             },
             "29-3-2021": {
                 "fishCaught": 2
+            },
+            "30-3-2021": {
+                "fishCaught": 1
             }
         }
     },
@@ -122,9 +140,12 @@
     "358441470233018368": {
         "id": "358441470233018368",
         "name": "samjorgensen",
-        "fishCaught": 1,
+        "fishCaught": 2,
         "days": {
             "29-3-2021": {
+                "fishCaught": 1
+            },
+            "30-3-2021": {
                 "fishCaught": 1
             }
         }
