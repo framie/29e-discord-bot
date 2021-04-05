@@ -1,17 +1,18 @@
-Country
-Rock
-Hip Hop
-RnB
-Pop
-Indie Rock
-Movie Tunes
-Musical
-Electronic/House
-Ambient 
 2000's
 60,70,80's
+Ambient
+Country
 Disco
-Meme
-Goth
-Emo
 DnB
+Electronic/House
+Emo
+Goth
+Hip Hop
+Indie Rock
+Meme
+Movie Tunes
+Musical
+Pop
+Rap
+RnB
+Rock

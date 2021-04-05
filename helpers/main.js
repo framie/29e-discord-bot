@@ -17,8 +17,8 @@ class Helpers {
         return message.content.toLowerCase().substring(1).split(' ').slice(1);
     }
 
-    titleCase = (str) => {
-        return str[0].toUpperCase() + str.slice(1);
+    titleCase = (str = '') => {
+        return str.split(' ').map(word => word ? word[0].toUpperCase() + word.slice(1) : '').join(' ')
     }
 
     getFormattedDate = () => {
