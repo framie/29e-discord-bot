@@ -5,12 +5,25 @@ const fs = require('fs');
 class Helpers {
     constructor(client) {
         this.client = client;
-        this.currentFish = {
-            caught: true
-        }
+        this.dataFile = './data.json';
         this.userFile = './users.json';
         this.userData = {};
-        this.getData();
+        if ('fish' in client.data) {
+            if (!('currentFish' in client.data.fish)) {
+                client.data.fish.currentFish = {
+                    caught: true
+                }
+            }
+        } else {
+            client.data.fish = {
+                currentFish: {
+                    caught: true
+                }
+            }
+        }
+        this.currentFish = client.data.fish.currentFish;
+
+        this.getUserData();
     }
 
     getArgs = (message) => {
@@ -36,22 +49,25 @@ class Helpers {
         return rand;
     }
 
-    getData = (() => {
-        const obj = this;
-        fs.readFile(this.userFile, 'utf8', (err, data) => {
+    getData = ((filename = this.dataFile) => {
+        const data = fs.readFileSync(filename, 'utf8');
+        return data ? JSON.parse(data) : {};
+    });
+
+    setData = ((data, filename = this.dataFile) => {
+        fs.writeFile(filename, JSON.stringify(data, null, 4), (err) => {
             if (err) {
                 throw err;
             }
-            obj.userData = JSON.parse(data);
         });
     });
 
-    setData = (() => {
-        fs.writeFile(this.userFile, JSON.stringify(this.userData, null, 4), (err) => {
-            if (err) {
-                throw err;
-            }
-        });
+    getUserData = (() => {
+        this.userData = this.getData(this.userFile);
+    });
+
+    setUserData = (() => {
+        this.setData(this.userData, this.userFile);
     });
 
     changeNickname = (userName, nickname = null) => {
@@ -157,7 +173,7 @@ class Helpers {
                 }
             }
         }
-        this.setData();
+        this.setUserData();
     }
 
     getFish = (message, update = false) => {
@@ -183,6 +199,7 @@ class Helpers {
                 image: fishImage,
                 caught: false
             }
+            this.client.data.fish.currentFish = this.currentFish;
             console.log(`Now there's a "${ fishName.split(' (')[0] }" to catch`);
             this.sendEmbeddedMessage(channelID, {image: {url: fishImage}});
         });
@@ -234,6 +251,7 @@ class Helpers {
         } else {
             this.sendEmbeddedMessage(channelID, {description: `Congratulations, ${ userName }, you just caught a ${ this.currentFish.name }!`});
             this.currentFish.caught = true;
+            this.client.data.fish.currentFish.caught = true;
             const voiceChannelID = message.member.voice.channel;
             if (voiceChannelID) {
                 this.changeNickname('29E Bot', 'Jeff');

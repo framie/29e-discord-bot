@@ -1,11 +1,14 @@
 const Discord = require('discord.js');
 const auth = require('./auth.json');
+const fs = require('fs');
 const Helpers = require('./helpers/main.js');
 const Music = require('./helpers/music.js');
 const Theme = require('./helpers/theme.js');
 
 const client = new Discord.Client();
 client.login(auth.discord_token);
+const data = fs.readFileSync('data.json', 'utf8')
+client.data = data ? JSON.parse(data) : {};
 
 const helpers = new Helpers(client);
 const music = new Music(client, helpers);
@@ -19,7 +22,11 @@ let bot = {};
 
 // 1 minute = 60000
 
-const fishDelay = {
+console.log('client.data', client.data);
+
+const fishDelay = client.data && client.data.fish.fishDelay
+? client.data.fish.fishDelay
+: {
     messages: 0,
     time: new Date().getTime(),
     messageThreshold: 20,
@@ -30,7 +37,6 @@ const fishDelay = {
 
 client.once('ready', () => {
     console.log(`Connected. Logged in as: ${ client.user.username } - (${ client.user.id })`);
-
     client.channels.cache.each(channel => {
         channelMap[channel.id] = {
             id: channel.id,
@@ -101,6 +107,7 @@ client.on('message', async message => {
     const content = message.content.toLowerCase();
     const guildMember = message.channel.guild.members.cache.get(userID);
     const now = new Date();
+    let commandFound = true;
 
     console.log(`Message: { user: ${ userName }, userID: ${ userID }, channelID: ${ channelID }, channelName: ${ channelName }, content: ${ content } }`);
     // console.log(client.channels.cache.get('720451534894399520'));
@@ -115,6 +122,13 @@ client.on('message', async message => {
         fishDelay.messages = 0;
         fishDelay.time = now.getTime();
         helpers.getFish(message, true);
+    }
+    if ('fish' in client.data) {
+        client.data.fish.fishDelay = fishDelay;
+    } else {
+        client.data.fish = {
+            fishDelay
+        }
     }
 
     if (content.split(' ')[0] === '-ask') {
@@ -142,15 +156,9 @@ client.on('message', async message => {
         ];
         const index = Math.floor(Math.random() * options.length);
         helpers.sendEmbeddedMessage(channelID, {description: options[index]});
-        return;
-    }
-
-    if (content.split(' ')[0] === '-theme') {
+    } else if (content.split(' ')[0] === '-theme') {
         theme.themeHandler(message);
-        return;
-    }
-
-    if (content === '-lol') {
+    } else if (content === '-lol') {
         const voiceChannelID = message.member.voice.channel;
         if (voiceChannelID) {
             helpers.changeNickname('29E Bot', 'LOL');
@@ -162,10 +170,7 @@ client.on('message', async message => {
                 helpers.changeNickname('29E Bot');
             });
         }
-        return;
-    }
-
-    if (content === '-stinky') {
+    } else if (content === '-stinky') {
         const voiceChannelID = message.member.voice.channel;
         if (voiceChannelID) {
             helpers.changeNickname('29E Bot', 'monke');
@@ -177,10 +182,7 @@ client.on('message', async message => {
                 helpers.changeNickname('29E Bot');
             });
         }
-        return;
-    }
-
-    if (content === '-jeff') {
+    } else if (content === '-jeff') {
         const voiceChannelID = message.member.voice.channel;
         if (voiceChannelID) {
             helpers.changeNickname('29E Bot', 'Jeff');
@@ -192,10 +194,7 @@ client.on('message', async message => {
                 helpers.changeNickname('29E Bot');
             });
         }
-        return;
-    }
-
-    if (content === '-racism') {
+    } else if (content === '-racism') {
         const voiceChannelID = message.member.voice.channel;
         if (voiceChannelID) {
             helpers.changeNickname('29E Bot', 'David Guetta');
@@ -207,10 +206,7 @@ client.on('message', async message => {
                 helpers.changeNickname('29E Bot');
             });
         }
-        return;
-    }
-
-    if (content === '-11') {
+    } else if (content === '-11') {
         const voiceChannelID = message.member.voice.channel;
         if (voiceChannelID) {
             helpers.changeNickname('29E Bot', 'Monk');
@@ -222,53 +218,30 @@ client.on('message', async message => {
                 helpers.changeNickname('29E Bot');
             });
         }
-        return;
-    }
-
-    if (content.slice(0, 9) === '-nickname') {
+    } else if (content.slice(0, 9) === '-nickname') {
         const args = message.content.substring(1).split(' ').slice(1);
         if (args.length === 0) return;
         const name = args[0].toLowerCase() === 'bot' ? '29E Bot' : args[0];
         helpers.changeNickname(name, args.slice(1).join(' '));
-        return;
-    }
-
-    if (content === '-microwave') {
-        message.channel.guild.members.cache.each(member => {
-            if (member.user.username === 'AuntyJacinda') member.voice.setChannel(null);
-        });
-        return;
-    }
-
-    if (content === '-silence') {
-        return;
+    } else if (content === '-silence') {
         const voiceChannelID = message.channel.guild.members.cache.get(message.author.id).voice;
         if (!voiceChannelID) return;
         message.channel.guild.members.cache.each(member => {
             member.voice.setMute(true);
         });
-        return;
-    }
-
-    if (content === '-speak') {
+    } else if (content === '-speak') {
         const voiceChannelID = message.channel.guild.members.cache.get(message.author.id).voice;
         if (!voiceChannelID) return;
         message.channel.guild.members.cache.each(member => {
             member.voice.setMute(false);
         });
-        return;
-    }
-    
-    if (content === '-converge') {
+    } else if (content === '-converge') {
         const voiceChannelID = message.channel.guild.members.cache.get(message.author.id).voice;
         if (!voiceChannelID) return;
         message.channel.guild.members.cache.each(member => {
             member.voice.setChannel(voiceChannelID);
         });
-        return;
-    }
-
-    if (content === '-scatter') {
+    } else if (content === '-scatter') {
         const voiceChannelID = message.channel.guild.members.cache.get(message.author.id).voice;
         if (!voiceChannelID) return;
         const channels = [];
@@ -282,21 +255,11 @@ client.on('message', async message => {
             member.voice.setChannel(currentChannels[index].id);
             currentChannels.splice(index, 1);
         });
-        return;
-    }
-
-    if (content === '-unmuteme') {
+    } else if (content === '-unmuteme') {
         message.channel.guild.members.cache.get(userID).voice.setMute(false);
-        return;
-    }
-
-    if (content === '-muteme') {
+    } else if (content === '-muteme') {
         message.channel.guild.members.cache.get(userID).voice.setMute(true);
-        return;
-    }
-
-    if (content === '-silenceolly') {
-        return;
+    } else if (content === '-silenceolly') {
         client.guilds.cache.each(guild => {
             guild.members.cache.each(member => {
                 if (member.user.username === 'NaggerFlip') {
@@ -304,11 +267,7 @@ client.on('message', async message => {
                 }
             });
         });
-        return;
-    }
-
-    if (content === '-kickolly') {
-        return;
+    } else if (content === '-kickolly') {
         client.guilds.cache.each(guild => {
             guild.members.cache.each(member => {
                 if (member.user.username === 'NaggerFlip') {
@@ -316,15 +275,13 @@ client.on('message', async message => {
                 }
             });
         });
-        return;
-    }
-
-    if (content === '-kickme') {
+    } else if (content === '-kickme') {
         message.channel.guild.members.cache.get(userID).voice.setChannel(null);
-        return;
+    } else {
+        commandFound = false;
     }
 
-    if (content[0] === '-') {
+    if (!commandFound && content[0] === '-') {
         const args = content.substring(1).split(' ').slice(1);
         const command = content.substring(1).split(' ')[0];
 
@@ -411,7 +368,8 @@ client.on('message', async message => {
 
         if (command.toLowerCase() in commands) commands[command.toLowerCase()].func();
         else if (channelID === '733306905908477962') helpers.sendEmbeddedMessage(channelID, {description: 'Invalid input. Type `-help` for a list of commands'});
-
     }
+
+    helpers.setData(client.data);
     
 });

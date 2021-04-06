@@ -2,7 +2,7 @@
     "129914751273795584": {
         "id": "129914751273795584",
         "name": "chiwa",
-        "fishCaught": 15,
+        "fishCaught": 16,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -14,6 +14,9 @@
                 "fishCaught": 2
             },
             "31-3-2021": {
+                "fishCaught": 1
+            },
+            "6-4-2021": {
                 "fishCaught": 1
             }
         }

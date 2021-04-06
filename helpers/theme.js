@@ -1,23 +1,32 @@
 const fs = require('fs');
-const Helpers = require('./main.js');
 
 class Theme {
     constructor(client, helpers) {
         this.client = client;
         this.helpers = helpers;
-        this.currentTheme = undefined;
         this.admins = [
             'AuntyJacinda',
             'chiwa'
         ];
-        this.initData();
+        if ('theme' in client.data) {
+            if (!('currentTheme' in client.data.theme)) {
+                client.data.theme.currentTheme = null;
+            }
+        } else {
+            client.data.theme = {
+                currentTheme: null
+            }
+        }
+        this.currentTheme = client.data.theme.currentTheme;
+
+        this.initThemeData();
     }
 
     setBot = (bot) => {
         this.bot = bot;
     }
 
-    initData = () => {
+    initThemeData = () => {
         const names = [];
         fs.readFile(`./assets/theme/names.txt`, 'utf8', (_, data) => {
             data.trim().split('\n').forEach(line => {
@@ -25,11 +34,11 @@ class Theme {
             });
             this.names = names;
             this.isLoading = names.length;
-            this.getData(names);
+            this.getThemeData(names);
         });
     }
 
-    getData = (names = []) => {
+    getThemeData = (names = []) => {
         names.forEach(name => {
             const lines = [];
             fs.readFile(`./assets/theme/${ name }s.txt`, 'utf8', (_, data) => {
@@ -120,12 +129,16 @@ class Theme {
             this.sendCommands(userID);
             return;
         }
+
         const variable = this.helpers.titleCase(args[1]);
         const items = this[`${ args[1] }s`];
         const embed = {
             description: 'Invalid input, please try again.'
         }
         switch (args[0]) {
+            case 'admin':
+                this.sendCommands(userID);
+                break;
             case 'list': 
                 embed.description += ' List command format is `-theme list [Variable]`';
                 if (args.length === 2 && items && items.length && args[1] !== 'name') {
@@ -188,6 +201,7 @@ class Theme {
             }
         } else if (args[0] === 'new') {
             this.currentTheme = this.getTheme();
+            this.client.data.theme.currentTheme = this.currentTheme;
             this.helpers.sendEmbeddedMessage(channelID, {description: `The current theme is \`${ this.currentTheme}\``});
         } else if (args[0] === 'admin') {
             // if (!(this.admins.includes(userName))) return;
