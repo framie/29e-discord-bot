@@ -1,14 +1,14 @@
 {
     "fish": {
         "fishDelay": {
-            "messages": 9,
-            "time": 1617853968218,
+            "messages": 5,
+            "time": 1617883383393,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "sea mullet",
-            "image": "https://cdn-0.generatormix.com/images/fish/sea-mullet.jpg",
+            "name": "yellowtail snapper",
+            "image": "https://cdn-0.generatormix.com/images/fish/yellowtail-snapper.jpg",
             "caught": false
         }
     },
