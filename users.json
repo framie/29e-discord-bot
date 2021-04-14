@@ -49,7 +49,7 @@
     "275025115660550144": {
         "id": "275025115660550144",
         "name": "LewisLitt",
-        "fishCaught": 10,
+        "fishCaught": 12,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -58,6 +58,9 @@
                 "fishCaught": 3
             },
             "8-4-2021": {
+                "fishCaught": 2
+            },
+            "14-4-2021": {
                 "fishCaught": 2
             }
         }
