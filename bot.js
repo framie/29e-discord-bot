@@ -82,7 +82,7 @@ client.on('message', async message => {
         if (content.split(' ')[0] === '-embed') {
             client.channels.cache.each(channel => {
                 if (channel.name === 'shitchat') {
-                    const message = content.slice(5);
+                    const message = content.slice(7);
                     helpers.sendEmbeddedMessage(channel.id, {description: message});
                 }
             });
