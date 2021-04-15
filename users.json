@@ -2,7 +2,7 @@
     "129914751273795584": {
         "id": "129914751273795584",
         "name": "chiwa",
-        "fishCaught": 17,
+        "fishCaught": 20,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -19,15 +19,21 @@
             "6-4-2021": {
                 "fishCaught": 1
             },
+            "10-4-2021": {
+                "fishCaught": 1
+            },
             "14-4-2021": {
                 "fishCaught": 1
+            },
+            "15-4-2021": {
+                "fishCaught": 2
             }
         }
     },
     "196692030188027904": {
         "id": "196692030188027904",
         "name": "AuntyJacinda",
-        "fishCaught": 12,
+        "fishCaught": 21,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -43,13 +49,22 @@
             },
             "30-3-2021": {
                 "fishCaught": 1
+            },
+            "10-4-2021": {
+                "fishCaught": 5
+            },
+            "11-4-2021": {
+                "fishCaught": 1
+            },
+            "12-4-2021": {
+                "fishCaught": 3
             }
         }
     },
     "275025115660550144": {
         "id": "275025115660550144",
         "name": "LewisLitt",
-        "fishCaught": 12,
+        "fishCaught": 15,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -60,7 +75,13 @@
             "8-4-2021": {
                 "fishCaught": 2
             },
+            "12-4-2021": {
+                "fishCaught": 1
+            },
             "14-4-2021": {
+                "fishCaught": 2
+            },
+            "15-4-2021": {
                 "fishCaught": 2
             }
         }
@@ -68,20 +89,23 @@
     "304217193854402563": {
         "id": "304217193854402563",
         "name": "cammac74",
-        "fishCaught": 7,
+        "fishCaught": 8,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
             },
             "6-4-2021": {
                 "fishCaught": 2
+            },
+            "10-4-2021": {
+                "fishCaught": 1
             }
         }
     },
     "319733281476313088": {
         "id": "319733281476313088",
         "name": "NaggerFlip",
-        "fishCaught": 17,
+        "fishCaught": 19,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -104,6 +128,12 @@
             "6-4-2021": {
                 "fishCaught": 2
             },
+            "10-4-2021": {
+                "fishCaught": 1
+            },
+            "12-4-2021": {
+                "fishCaught": 1
+            },
             "14-4-2021": {
                 "fishCaught": 3
             }
@@ -112,12 +142,15 @@
     "255254301566435330": {
         "id": "255254301566435330",
         "name": "Strider",
-        "fishCaught": 4,
+        "fishCaught": 5,
         "days": {
             "25-3-2021": {
                 "fishCaught": 3
             },
             "31-3-2021": {
+                "fishCaught": 1
+            },
+            "15-4-2021": {
                 "fishCaught": 1
             }
         }
@@ -125,10 +158,13 @@
     "115814597012881414": {
         "id": "115814597012881414",
         "name": "PastyFaceMalone",
-        "fishCaught": 1,
+        "fishCaught": 3,
         "days": {
             "25-3-2021": {
                 "fishCaught": 1
+            },
+            "10-4-2021": {
+                "fishCaught": 2
             }
         }
     },
@@ -171,6 +207,19 @@
             },
             "14-4-2021": {
                 "fishCaught": 2
+            }
+        }
+    },
+    "278069466821033988": {
+        "id": "278069466821033988",
+        "name": "coolguypeter",
+        "fishCaught": 2,
+        "days": {
+            "10-4-2021": {
+                "fishCaught": 1
+            },
+            "11-4-2021": {
+                "fishCaught": 1
             }
         }
     }
