@@ -2,7 +2,7 @@
     "129914751273795584": {
         "id": "129914751273795584",
         "name": "chiwa",
-        "fishCaught": 20,
+        "fishCaught": 21,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -27,13 +27,16 @@
             },
             "15-4-2021": {
                 "fishCaught": 2
+            },
+            "16-4-2021": {
+                "fishCaught": 1
             }
         }
     },
     "196692030188027904": {
         "id": "196692030188027904",
         "name": "AuntyJacinda",
-        "fishCaught": 21,
+        "fishCaught": 22,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -58,13 +61,16 @@
             },
             "12-4-2021": {
                 "fishCaught": 3
+            },
+            "16-4-2021": {
+                "fishCaught": 1
             }
         }
     },
     "275025115660550144": {
         "id": "275025115660550144",
         "name": "LewisLitt",
-        "fishCaught": 15,
+        "fishCaught": 20,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -83,13 +89,16 @@
             },
             "15-4-2021": {
                 "fishCaught": 2
+            },
+            "16-4-2021": {
+                "fishCaught": 5
             }
         }
     },
     "304217193854402563": {
         "id": "304217193854402563",
         "name": "cammac74",
-        "fishCaught": 8,
+        "fishCaught": 9,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -99,13 +108,16 @@
             },
             "10-4-2021": {
                 "fishCaught": 1
+            },
+            "16-4-2021": {
+                "fishCaught": 1
             }
         }
     },
     "319733281476313088": {
         "id": "319733281476313088",
         "name": "NaggerFlip",
-        "fishCaught": 19,
+        "fishCaught": 20,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -136,6 +148,9 @@
             },
             "14-4-2021": {
                 "fishCaught": 3
+            },
+            "16-4-2021": {
+                "fishCaught": 1
             }
         }
     },
