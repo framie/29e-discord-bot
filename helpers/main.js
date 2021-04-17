@@ -363,12 +363,13 @@ class Helpers {
             'https://i.imgur.com/DKBORzC.jpg',
             'https://i.imgur.com/JVsssHz.jpg',
             'https://i.imgur.com/kc8PceX.jpg',
-            'https://i.imgur.com/L03BLaY.jpg'
+            'https://i.imgur.com/L03BLaY.jpg',
+            'https://i.imgur.com/l01y6Hh.jpg'
         ];
         let index = 1;
         if (args.length && !isNaN(args[0])) index = parseInt(args[0]);
         if (index < 1) index = 1;
-        else if (index > 5) index = 5;
+        else if (index > 6) index = 6;
         this.sendEmbeddedMessage(channelID, {image: {url: imageUrls[index - 1]}});
     }
 

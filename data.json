@@ -1,14 +1,14 @@
 {
     "fish": {
         "fishDelay": {
-            "messages": 12,
-            "time": 1618548535895,
+            "messages": 16,
+            "time": 1618643443697,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "butterflyfish",
-            "image": "https://cdn-0.generatormix.com/images/fish/butterflyfish.jpg",
+            "name": "Bonito",
+            "image": "https://cdn-0.generatormix.com/images/fish/bonito.jpg",
             "caught": true
         }
     },
