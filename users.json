@@ -2,7 +2,7 @@
     "129914751273795584": {
         "id": "129914751273795584",
         "name": "chiwa",
-        "fishCaught": 22,
+        "fishCaught": 23,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -30,6 +30,9 @@
             },
             "16-4-2021": {
                 "fishCaught": 2
+            },
+            "18-4-2021": {
+                "fishCaught": 1
             }
         }
     },
@@ -123,7 +126,7 @@
     "319733281476313088": {
         "id": "319733281476313088",
         "name": "NaggerFlip",
-        "fishCaught": 20,
+        "fishCaught": 21,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -156,6 +159,9 @@
                 "fishCaught": 3
             },
             "16-4-2021": {
+                "fishCaught": 1
+            },
+            "18-4-2021": {
                 "fishCaught": 1
             }
         }
