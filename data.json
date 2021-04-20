@@ -2,13 +2,13 @@
     "fish": {
         "fishDelay": {
             "messages": 4,
-            "time": 1618829421721,
+            "time": 1618893532695,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "Bass",
-            "image": "https://cdn-0.generatormix.com/images/fish/bass-(striped).jpg",
+            "name": "damselfish",
+            "image": "https://cdn-0.generatormix.com/images/fish/damselfish.jpg",
             "caught": false
         }
     },
