@@ -194,6 +194,30 @@ client.on('message', async message => {
                 helpers.changeNickname('29E Bot');
             });
         }
+    } else if (content === '-doit') {
+        const voiceChannelID = message.member.voice.channel;
+        if (voiceChannelID) {
+            helpers.changeNickname('29E Bot', 'Shia LaBeouf');
+            const connection = await message.member.voice.channel.join();
+            const dispatcher = connection.play('assets/mp3/doit.mp3', {volume: 1});
+            dispatcher.on('finish', () => {
+                dispatcher.destroy();
+                message.member.voice.channel.leave();
+                helpers.changeNickname('29E Bot');
+            });
+        }
+    } else if (content === '-thisisagoodsword') {
+        const voiceChannelID = message.member.voice.channel;
+        if (voiceChannelID) {
+            helpers.changeNickname('29E Bot', 'Haleth, Son of Hama');
+            const connection = await message.member.voice.channel.join();
+            const dispatcher = connection.play('assets/mp3/thisisagoodsword.mp3', {volume: 1});
+            dispatcher.on('finish', () => {
+                dispatcher.destroy();
+                message.member.voice.channel.leave();
+                helpers.changeNickname('29E Bot');
+            });
+        }
     } else if (content === '-racism') {
         const voiceChannelID = message.member.voice.channel;
         if (voiceChannelID) {

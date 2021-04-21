@@ -39,7 +39,7 @@
     "196692030188027904": {
         "id": "196692030188027904",
         "name": "AuntyJacinda",
-        "fishCaught": 27,
+        "fishCaught": 28,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -73,6 +73,9 @@
             },
             "19-4-2021": {
                 "fishCaught": 3
+            },
+            "21-4-2021": {
+                "fishCaught": 1
             }
         }
     },
