@@ -2,13 +2,13 @@
     "fish": {
         "fishDelay": {
             "messages": 2,
-            "time": 1618980252951,
+            "time": 1619009899179,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "smelt",
-            "image": "https://cdn-0.generatormix.com/images/fish/smelt.jpg",
+            "name": "Bass",
+            "image": "https://cdn-0.generatormix.com/images/fish/bass-(largemouth).jpg",
             "caught": false
         }
     },

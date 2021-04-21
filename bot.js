@@ -131,6 +131,47 @@ client.on('message', async message => {
         }
     }
 
+    soundChecker = (content) => {
+        const command = content.slice(1);
+        const soundMap = {
+            '11': 'Monk',
+            'andmyaxe': 'Gimli',
+            'doit': 'Shia LaBeouf',
+            'gandalfwhistlingforshadowfax': 'Gandalf the White',
+            'greatsoup': 'Shrek',
+            'jeff': 'Jeff',
+            'onemorestep': 'Samwise Gamgee',
+            'racism': 'David Guetta',
+            'stillonlycountsasone': 'Gimli',
+            'stillsharp': 'Boromir Eldest Son of Denethor',
+            'stinky': 'monke',
+            'thisisagoodsword': 'Haleth, Son of Hama'
+        }
+        if (command in soundMap) return { command, nickname: soundMap[command]};
+        else return false
+    }    
+    soundHelper = async (soundData) => {
+        console.lo
+        const voiceChannelID = message.member.voice.channel;
+        if (voiceChannelID) {
+            helpers.changeNickname('29E Bot', soundData.nickname);
+            const connection = await message.member.voice.channel.join();
+            const dispatcher = connection.play(`assets/mp3/${ soundData.command }.mp3`, {volume: 1});
+            dispatcher.on('finish', () => {
+                dispatcher.destroy();
+                message.member.voice.channel.leave();
+                helpers.changeNickname('29E Bot');
+            });
+        }
+    }
+
+    const soundData = soundChecker(content);
+    console.log('test test soundData', soundData, !!soundData);
+    if (soundData) {
+        soundHelper(soundData);
+        return;
+    }
+
     if (content.split(' ')[0] === '-ask') {
         const options = [
             'As I see it, yes.',
@@ -158,90 +199,6 @@ client.on('message', async message => {
         helpers.sendEmbeddedMessage(channelID, {description: options[index]});
     } else if (content.split(' ')[0] === '-theme') {
         theme.themeHandler(message);
-    } else if (content === '-lol') {
-        const voiceChannelID = message.member.voice.channel;
-        if (voiceChannelID) {
-            helpers.changeNickname('29E Bot', 'LOL');
-            const connection = await message.member.voice.channel.join();
-            const dispatcher = connection.play('assets/mp3/laugh.mp3', {volume: 1});
-            dispatcher.on('finish', () => {
-                dispatcher.destroy();
-                message.member.voice.channel.leave();
-                helpers.changeNickname('29E Bot');
-            });
-        }
-    } else if (content === '-stinky') {
-        const voiceChannelID = message.member.voice.channel;
-        if (voiceChannelID) {
-            helpers.changeNickname('29E Bot', 'monke');
-            const connection = await message.member.voice.channel.join();
-            const dispatcher = connection.play('assets/mp3/stinky2.mp3', {volume: 1});
-            dispatcher.on('finish', () => {
-                dispatcher.destroy();
-                message.member.voice.channel.leave();
-                helpers.changeNickname('29E Bot');
-            });
-        }
-    } else if (content === '-jeff') {
-        const voiceChannelID = message.member.voice.channel;
-        if (voiceChannelID) {
-            helpers.changeNickname('29E Bot', 'Jeff');
-            const connection = await message.member.voice.channel.join();
-            const dispatcher = connection.play('assets/mp3/jeff.mp3', {volume: 1});
-            dispatcher.on('finish', () => {
-                dispatcher.destroy();
-                message.member.voice.channel.leave();
-                helpers.changeNickname('29E Bot');
-            });
-        }
-    } else if (content === '-doit') {
-        const voiceChannelID = message.member.voice.channel;
-        if (voiceChannelID) {
-            helpers.changeNickname('29E Bot', 'Shia LaBeouf');
-            const connection = await message.member.voice.channel.join();
-            const dispatcher = connection.play('assets/mp3/doit.mp3', {volume: 1});
-            dispatcher.on('finish', () => {
-                dispatcher.destroy();
-                message.member.voice.channel.leave();
-                helpers.changeNickname('29E Bot');
-            });
-        }
-    } else if (content === '-thisisagoodsword') {
-        const voiceChannelID = message.member.voice.channel;
-        if (voiceChannelID) {
-            helpers.changeNickname('29E Bot', 'Haleth, Son of Hama');
-            const connection = await message.member.voice.channel.join();
-            const dispatcher = connection.play('assets/mp3/thisisagoodsword.mp3', {volume: 1});
-            dispatcher.on('finish', () => {
-                dispatcher.destroy();
-                message.member.voice.channel.leave();
-                helpers.changeNickname('29E Bot');
-            });
-        }
-    } else if (content === '-racism') {
-        const voiceChannelID = message.member.voice.channel;
-        if (voiceChannelID) {
-            helpers.changeNickname('29E Bot', 'David Guetta');
-            const connection = await message.member.voice.channel.join();
-            const dispatcher = connection.play('assets/mp3/racism.mp3', {volume: 1});
-            dispatcher.on('finish', () => {
-                dispatcher.destroy();
-                message.member.voice.channel.leave();
-                helpers.changeNickname('29E Bot');
-            });
-        }
-    } else if (content === '-11') {
-        const voiceChannelID = message.member.voice.channel;
-        if (voiceChannelID) {
-            helpers.changeNickname('29E Bot', 'Monk');
-            const connection = await message.member.voice.channel.join();
-            const dispatcher = connection.play('assets/mp3/wololo.mp3', {volume: 1});
-            dispatcher.on('finish', () => {
-                dispatcher.destroy();
-                message.member.voice.channel.leave();
-                helpers.changeNickname('29E Bot');
-            });
-        }
     } else if (content.slice(0, 9) === '-nickname') {
         const args = message.content.substring(1).split(' ').slice(1);
         if (args.length === 0) return;
