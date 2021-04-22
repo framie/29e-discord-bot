@@ -369,7 +369,7 @@ class Helpers {
         let index = 1;
         if (args.length && !isNaN(args[0])) index = parseInt(args[0]);
         if (index < 1) index = 1;
-        else if (index > imageUrls.length - 1) index = imageUrls.length - 1;
+        else if (index > imageUrls.length) index = imageUrls.length;
         this.sendEmbeddedMessage(channelID, {image: {url: imageUrls[index - 1]}});
     }
 
