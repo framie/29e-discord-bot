@@ -131,48 +131,79 @@ client.on('message', async message => {
         }
     }
 
+    const soundMap = {
+        '11': 'Monk',
+        'andmyaxe': 'Gimli',
+        'doit': 'Shia LaBeouf',
+        'care': 'Tiny Violin',
+        'cs': 'Gandalf the White',
+        'getthatcornoutofmyface': 'Nacho Libre',
+        'gooooodanakin': 'Emperor Palpatine',
+        'greatsoup': 'Shrek',
+        'holyshit': 'Holy Shit',
+        'jeff': 'Jeff',
+        'niceboulder': 'Donkey',
+        'no': 'Daddy Obi-Wan',
+        'onemorestep': 'Samwise Gamgee',
+        'pizzatime': 'Peter Parker',
+        'racism': 'David Guetta',
+        'sad': 'Depression',
+        'stillonlycountsasone': 'Gimli',
+        'stillsharp': 'Boromir, Eldest Son of Denethor',
+        'stinky': 'monke',
+        'thisisagoodsword': 'Haleth, Son of Hama',
+        'unlimitedpower': 'Emperor Palpatine',
+        'youunderestimatemypower': 'Anakin Skywalker',
+        'why': 'Michael Scott'
+    }
     soundChecker = (content) => {
-        const command = content.slice(1);
-        const soundMap = {
-            '11': 'Monk',
-            'andmyaxe': 'Gimli',
-            'doit': 'Shia LaBeouf',
-            'gandalfwhistlingforshadowfax': 'Gandalf the White',
-            'greatsoup': 'Shrek',
-            'jeff': 'Jeff',
-            'onemorestep': 'Samwise Gamgee',
-            'racism': 'David Guetta',
-            'stillonlycountsasone': 'Gimli',
-            'stillsharp': 'Boromir Eldest Son of Denethor',
-            'stinky': 'monke',
-            'thisisagoodsword': 'Haleth, Son of Hama'
+        const args = content.slice(1).split(' ');
+        const command = args[0];
+        let voiceChannel;
+        if (args.length > 1) {
+            const user = args.slice(1).join(' ');
+            let userFound = false;
+            client.guilds.cache.each(guild => {
+                guild.members.cache.each(member => {
+                    const displayName = member.displayName
+                        ? member.displayName.toLowerCase()
+                        : '';
+                    if (!userFound && (member.user.username.toLowerCase().includes(user) || (displayName && displayName.includes(user)))) {
+                        userFound = true;
+                        voiceChannel = member.voice.channel;
+                    }
+                });
+            });
         }
-        if (command in soundMap) return { command, nickname: soundMap[command]};
+        if (command in soundMap) return { command, nickname: soundMap[command], voiceChannel};
         else return false
     }    
     soundHelper = async (soundData) => {
-        console.lo
-        const voiceChannelID = message.member.voice.channel;
-        if (voiceChannelID) {
-            helpers.changeNickname('29E Bot', soundData.nickname);
-            const connection = await message.member.voice.channel.join();
+        const voiceChannel = soundData.voiceChannel 
+            ? soundData.voiceChannel
+            : message.member.voice.channel;
+        if (voiceChannel) {
+            if (soundData.nickname) helpers.changeNickname('29E Bot', soundData.nickname);
+            const connection = await voiceChannel.join();
             const dispatcher = connection.play(`assets/mp3/${ soundData.command }.mp3`, {volume: 1});
             dispatcher.on('finish', () => {
                 dispatcher.destroy();
-                message.member.voice.channel.leave();
+                voiceChannel.leave();
                 helpers.changeNickname('29E Bot');
             });
         }
     }
 
     const soundData = soundChecker(content);
-    console.log('test test soundData', soundData, !!soundData);
     if (soundData) {
         soundHelper(soundData);
         return;
     }
 
-    if (content.split(' ')[0] === '-ask') {
+    if (content.split(' ')[0] === '-quotes') {
+        helpers.sendEmbeddedMessage(channelID, {description: Object.keys(soundMap).sort().map(key => `-${ key }`).join('\n')});
+        return;
+    } else if (content.split(' ')[0] === '-ask') {
         const options = [
             'As I see it, yes.',
             'Ask again later.',
@@ -248,6 +279,14 @@ client.on('message', async message => {
                 }
             });
         });
+    } else if (content === '-unsilenceolly') {
+        client.guilds.cache.each(guild => {
+            guild.members.cache.each(member => {
+                if (member.user.username === 'NaggerFlip') {
+                    member.voice.setMute(false);
+                }
+            });
+        });
     } else if (content === '-kickolly') {
         client.guilds.cache.each(guild => {
             guild.members.cache.each(member => {
@@ -282,6 +321,10 @@ client.on('message', async message => {
                 'func': () => helpers.sendEmbeddedMessage(channelID, {description: 'It is raining in Johnsonville'}),
                 'description': 'Provides weather report for current location',
                 'usage': ['-weather']
+            },
+            'schneebs': {
+                'hidden': true,
+                'func': () => helpers.schneebsHandler(message)
             },
             'yahn': {
                 'hidden': true,
