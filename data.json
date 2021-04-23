@@ -1,15 +1,15 @@
 {
     "fish": {
         "fishDelay": {
-            "messages": 12,
-            "time": 1619096715051,
+            "messages": 7,
+            "time": 1619151581867,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "lizardfish",
-            "image": "https://cdn-0.generatormix.com/images/fish/lizardfish.jpg",
-            "caught": false
+            "name": "barracuda",
+            "image": "https://cdn-0.generatormix.com/images/fish/barracuda.jpg",
+            "caught": true
         }
     },
     "theme": {
