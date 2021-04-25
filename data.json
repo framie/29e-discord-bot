@@ -1,15 +1,15 @@
 {
     "fish": {
         "fishDelay": {
-            "messages": 18,
-            "time": 1619250946875,
+            "messages": 5,
+            "time": 1619350438213,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "amberjack",
-            "image": "https://cdn-0.generatormix.com/images/fish/amberjack.jpg",
-            "caught": false
+            "name": "stingray",
+            "image": "https://cdn-0.generatormix.com/images/fish/stingray.jpg",
+            "caught": true
         }
     },
     "theme": {
