@@ -142,6 +142,7 @@ client.on('message', async message => {
         'getthatcornoutofmyface': 'Nacho Libre',
         'gooooodanakin': 'Emperor Palpatine',
         'greatsoup': 'Shrek',
+        'hefell': 'Gimli',
         'holyshit': 'Holy Shit',
         'jeff': 'Jeff',
         'niceboulder': 'Donkey',
@@ -163,7 +164,7 @@ client.on('message', async message => {
         const args = content.slice(1).split(' ');
         const command = args[0];
         let voiceChannel;
-        if (args.length > 1) {
+        if (args.length > 1 && userName !== 'yahnschiefpresssecretary') {
             const user = args.slice(1).join(' ');
             let userFound = false;
             client.guilds.cache.each(guild => {
