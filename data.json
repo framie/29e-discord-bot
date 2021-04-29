@@ -2,13 +2,13 @@
     "fish": {
         "fishDelay": {
             "messages": 18,
-            "time": 1619672861781,
+            "time": 1619691225605,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "hickory shad",
-            "image": "https://cdn-0.generatormix.com/images/fish/hickory-shad.jpg",
+            "name": "cardinalfish",
+            "image": "https://cdn-0.generatormix.com/images/fish/cardinalfish.jpg",
             "caught": false
         }
     },
