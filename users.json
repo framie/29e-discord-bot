@@ -2,7 +2,7 @@
     "129914751273795584": {
         "id": "129914751273795584",
         "name": "chiwa",
-        "fishCaught": 35,
+        "fishCaught": 36,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -48,13 +48,16 @@
             },
             "27-4-2021": {
                 "fishCaught": 4
+            },
+            "28-4-2021": {
+                "fishCaught": 1
             }
         }
     },
     "196692030188027904": {
         "id": "196692030188027904",
         "name": "AuntyJacinda",
-        "fishCaught": 36,
+        "fishCaught": 38,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -106,13 +109,16 @@
             },
             "26-4-2021": {
                 "fishCaught": 1
+            },
+            "28-4-2021": {
+                "fishCaught": 2
             }
         }
     },
     "275025115660550144": {
         "id": "275025115660550144",
         "name": "LewisLitt",
-        "fishCaught": 28,
+        "fishCaught": 30,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -146,13 +152,16 @@
             },
             "23-4-2021": {
                 "fishCaught": 4
+            },
+            "29-4-2021": {
+                "fishCaught": 2
             }
         }
     },
     "304217193854402563": {
         "id": "304217193854402563",
         "name": "cammac74",
-        "fishCaught": 18,
+        "fishCaught": 21,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -183,13 +192,19 @@
             },
             "25-4-2021": {
                 "fishCaught": 1
+            },
+            "28-4-2021": {
+                "fishCaught": 2
+            },
+            "29-4-2021": {
+                "fishCaught": 1
             }
         }
     },
     "319733281476313088": {
         "id": "319733281476313088",
         "name": "NaggerFlip",
-        "fishCaught": 36,
+        "fishCaught": 38,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -247,6 +262,12 @@
             },
             "27-4-2021": {
                 "fishCaught": 5
+            },
+            "28-4-2021": {
+                "fishCaught": 1
+            },
+            "29-4-2021": {
+                "fishCaught": 1
             }
         }
     },
