@@ -1,15 +1,15 @@
 {
     "fish": {
         "fishDelay": {
-            "messages": 18,
-            "time": 1619691225605,
+            "messages": 7,
+            "time": 1619870111690,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "cardinalfish",
-            "image": "https://cdn-0.generatormix.com/images/fish/cardinalfish.jpg",
-            "caught": false
+            "name": "bluefish",
+            "image": "https://cdn-0.generatormix.com/images/fish/bluefish.jpg",
+            "caught": true
         }
     },
     "theme": {
