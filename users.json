@@ -2,7 +2,7 @@
     "129914751273795584": {
         "id": "129914751273795584",
         "name": "chiwa",
-        "fishCaught": 39,
+        "fishCaught": 40,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -57,13 +57,16 @@
             },
             "2-5-2021": {
                 "fishCaught": 2
+            },
+            "3-5-2021": {
+                "fishCaught": 1
             }
         }
     },
     "196692030188027904": {
         "id": "196692030188027904",
         "name": "AuntyJacinda",
-        "fishCaught": 42,
+        "fishCaught": 45,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -123,6 +126,9 @@
                 "fishCaught": 1
             },
             "1-5-2021": {
+                "fishCaught": 3
+            },
+            "3-5-2021": {
                 "fishCaught": 3
             }
         }
