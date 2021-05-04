@@ -2,7 +2,7 @@
     "129914751273795584": {
         "id": "129914751273795584",
         "name": "chiwa",
-        "fishCaught": 40,
+        "fishCaught": 45,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -52,6 +52,9 @@
             "28-4-2021": {
                 "fishCaught": 1
             },
+            "30-4-2021": {
+                "fishCaught": 1
+            },
             "1-5-2021": {
                 "fishCaught": 1
             },
@@ -60,13 +63,16 @@
             },
             "3-5-2021": {
                 "fishCaught": 1
+            },
+            "4-5-2021": {
+                "fishCaught": 4
             }
         }
     },
     "196692030188027904": {
         "id": "196692030188027904",
         "name": "AuntyJacinda",
-        "fishCaught": 45,
+        "fishCaught": 51,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -125,11 +131,17 @@
             "29-4-2021": {
                 "fishCaught": 1
             },
+            "30-4-2021": {
+                "fishCaught": 1
+            },
             "1-5-2021": {
                 "fishCaught": 3
             },
             "3-5-2021": {
                 "fishCaught": 3
+            },
+            "4-5-2021": {
+                "fishCaught": 5
             }
         }
     },
@@ -179,7 +191,7 @@
     "304217193854402563": {
         "id": "304217193854402563",
         "name": "cammac74",
-        "fishCaught": 22,
+        "fishCaught": 24,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -217,7 +229,13 @@
             "29-4-2021": {
                 "fishCaught": 1
             },
+            "30-4-2021": {
+                "fishCaught": 1
+            },
             "2-5-2021": {
+                "fishCaught": 1
+            },
+            "4-5-2021": {
                 "fishCaught": 1
             }
         }
@@ -225,7 +243,7 @@
     "319733281476313088": {
         "id": "319733281476313088",
         "name": "NaggerFlip",
-        "fishCaught": 42,
+        "fishCaught": 45,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -295,13 +313,16 @@
             },
             "2-5-2021": {
                 "fishCaught": 1
+            },
+            "4-5-2021": {
+                "fishCaught": 3
             }
         }
     },
     "255254301566435330": {
         "id": "255254301566435330",
         "name": "Strider",
-        "fishCaught": 6,
+        "fishCaught": 7,
         "days": {
             "25-3-2021": {
                 "fishCaught": 3
@@ -313,6 +334,9 @@
                 "fishCaught": 1
             },
             "23-4-2021": {
+                "fishCaught": 1
+            },
+            "30-4-2021": {
                 "fishCaught": 1
             }
         }

@@ -134,9 +134,10 @@ client.on('message', async message => {
     const soundMap = {
         '11': 'Monk',
         'andmyaxe': 'Gimli',
-        'doit': 'Shia LaBeouf',
+        'boourns': '',
         'care': 'Tiny Violin',
         'cs': 'Gandalf the White',
+        'doit': 'Shia LaBeouf',
         'french': 'Renekton',
         'gay': 'Chang',
         'getthatcornoutofmyface': 'Nacho Libre',
@@ -329,6 +330,10 @@ client.on('message', async message => {
             'schneebs': {
                 'hidden': true,
                 'func': () => helpers.schneebsHandler(message)
+            },
+            'snrub': {
+                'hidden': true,
+                'func': () => helpers.snrubHandler(message)
             },
             'yahn': {
                 'hidden': true,
