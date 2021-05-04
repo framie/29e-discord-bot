@@ -2,14 +2,14 @@
     "fish": {
         "fishDelay": {
             "messages": 12,
-            "time": 1620107647869,
+            "time": 1620129616234,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "spadefish",
-            "image": "https://cdn-0.generatormix.com/images/fish/spadefish.jpg",
-            "caught": true
+            "name": "Bullhead",
+            "image": "https://cdn-0.generatormix.com/images/fish/bullhead.jpg",
+            "caught": false
         }
     },
     "theme": {
