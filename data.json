@@ -1,18 +1,18 @@
 {
     "fish": {
         "fishDelay": {
-            "messages": 12,
-            "time": 1620129616234,
+            "messages": 16,
+            "time": 1620191592536,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "Bullhead",
-            "image": "https://cdn-0.generatormix.com/images/fish/bullhead.jpg",
+            "name": "bluefin tuna",
+            "image": "https://cdn-0.generatormix.com/images/fish/bluefin-tuna.jpg",
             "caught": false
         }
     },
     "theme": {
-        "currentTheme": "Songs Snrub listens to while Cooking"
+        "currentTheme": "Songs Olly(Prick) listens to while Walking"
     }
 }

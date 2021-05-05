@@ -135,6 +135,47 @@ class Helpers {
         });
     }
 
+    appendUserArray = (userID, userName, arrayName, values = []) => {
+        if (typeof values !== 'object') values = [values];
+        const today = this.getFormattedDate();
+        if (userID in this.userData) {
+            if (arrayName in this.userData[userID]) {
+                values.forEach(value => this.userData[userID][arrayName].push(value));
+                if (today in this.userData[userID].days) {
+                    if (arrayName in this.userData[userID].days[today]) {
+                        values.forEach(value => this.userData[userID].days[today][arrayName].push(value));
+                    } else {
+                        this.userData[userID].days[today][arrayName] = values;
+                    }
+                } else {
+                    this.userData[userID].days[today] = {
+                        [arrayName]: values
+                    }
+                }
+            } else {
+                this.userData[userID][arrayName] = values;
+                if (today in this.userData[userID].days) {
+                    this.userData[userID].days[today][arrayName] = values;
+                } else {
+                    this.userData[userID].days[today] = {
+                        [arrayName]: values
+                    }
+                }
+            }
+        } else {
+            this.userData[userID] = {
+                id: userID,
+                name: userName,
+                [arrayName]: values,
+                days: {
+                    [today]: {
+                        [arrayName]: values
+                    }
+                }
+            }
+        }
+    }
+
     incrementUserAttr = (userID, userName, attrName, amount) => {
         const today = this.getFormattedDate();
         if (userID in this.userData) {
