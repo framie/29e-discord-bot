@@ -75,7 +75,7 @@
     "196692030188027904": {
         "id": "196692030188027904",
         "name": "AuntyJacinda",
-        "fishCaught": 54,
+        "fishCaught": 55,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -147,7 +147,7 @@
                 "fishCaught": 5
             },
             "5-5-2021": {
-                "fishCaught": 3
+                "fishCaught": 4
             }
         }
     },
@@ -252,7 +252,7 @@
     "319733281476313088": {
         "id": "319733281476313088",
         "name": "NaggerFlip",
-        "fishCaught": 46,
+        "fishCaught": 47,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -327,7 +327,7 @@
                 "fishCaught": 3
             },
             "5-5-2021": {
-                "fishCaught": 1
+                "fishCaught": 2
             }
         }
     },
