@@ -1,18 +1,18 @@
 {
     "fish": {
         "fishDelay": {
-            "messages": 16,
-            "time": 1620191592536,
+            "messages": 10,
+            "time": 1620192320855,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "bluefin tuna",
-            "image": "https://cdn-0.generatormix.com/images/fish/bluefin-tuna.jpg",
-            "caught": false
+            "name": "red grouper",
+            "image": "https://cdn-0.generatormix.com/images/fish/red-grouper.jpg",
+            "caught": true
         }
     },
     "theme": {
-        "currentTheme": "Songs Olly(Prick) listens to while Walking"
+        "currentTheme": "Songs you'd hear at a 29e Important Meeting"
     }
 }
