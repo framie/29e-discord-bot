@@ -1,14 +1,14 @@
 {
     "fish": {
         "fishDelay": {
-            "messages": 9,
-            "time": 1620294742909,
+            "messages": 14,
+            "time": 1620301845460,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "hawkfish",
-            "image": "https://cdn-0.generatormix.com/images/fish/hawkfish.jpg",
+            "name": "Black Jewfish",
+            "image": "https://cdn-0.generatormix.com/images/fish/black-jewfish.jpg",
             "caught": false
         }
     },
