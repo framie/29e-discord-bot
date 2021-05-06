@@ -16,7 +16,8 @@ const theme = new Theme(client, helpers);
 const channelMap = {};
 const userIDMap = {};
 const admins = [
-    'chiwa'
+    'chiwa',
+    'NaggerFlip'
 ];
 let bot = {};
 
@@ -48,8 +49,8 @@ client.once('ready', () => {
         guild.members.cache.each(member => {
             userIDMap[member.id] = {
                 id: member.id,
-                userName: member.user.username,
-                nickName: member.nickname
+                username: member.user.username,
+                nickname: member.nickname
             }
             if (member.user.username === '29E Bot') {
                 bot = userIDMap[member.id];
@@ -94,10 +95,10 @@ client.on('message', async message => {
             return;
         }
 
-        if (content[0] === '-') {
+        if (content[0] === '-' && !(admins.includes(userName))) {
             helpers.sendEmbeddedDM(userID, {description: 'Unrecognised command'});
         }
-        return;
+        if (!(admins.includes(userName))) return;
     }
 
     const channelID = message.channel.id;
@@ -105,7 +106,7 @@ client.on('message', async message => {
     const userName = message.author.username;
     const userID = message.author.id;
     const content = message.content.toLowerCase();
-    const guildMember = message.channel.guild.members.cache.get(userID);
+    const guildMember = message.channel.guild && message.channel.guild.members.cache.get(userID);
     const now = new Date();
     let commandFound = true;
 
@@ -164,6 +165,7 @@ client.on('message', async message => {
     soundChecker = (content) => {
         const args = content.slice(1).split(' ');
         const command = args[0];
+        if (!(command in soundMap)) return false;
         let voiceChannel;
         if (args.length > 1 && userName !== 'yahnschiefpresssecretary') {
             const user = args.slice(1).join(' ');
@@ -241,12 +243,14 @@ client.on('message', async message => {
         const name = args[0].toLowerCase() === 'bot' ? '29E Bot' : args[0];
         helpers.changeNickname(name, args.slice(1).join(' '));
     } else if (content === '-silence') {
+        return;
         const voiceChannelID = message.channel.guild.members.cache.get(message.author.id).voice;
         if (!voiceChannelID) return;
         message.channel.guild.members.cache.each(member => {
             member.voice.setMute(true);
         });
     } else if (content === '-speak') {
+        return;
         const voiceChannelID = message.channel.guild.members.cache.get(message.author.id).voice;
         if (!voiceChannelID) return;
         message.channel.guild.members.cache.each(member => {
@@ -277,6 +281,7 @@ client.on('message', async message => {
     } else if (content === '-muteme') {
         message.channel.guild.members.cache.get(userID).voice.setMute(true);
     } else if (content === '-silenceolly') {
+        return;
         client.guilds.cache.each(guild => {
             guild.members.cache.each(member => {
                 if (member.user.username === 'NaggerFlip') {
@@ -285,9 +290,46 @@ client.on('message', async message => {
             });
         });
     } else if (content === '-unsilenceolly') {
+        return;
         client.guilds.cache.each(guild => {
             guild.members.cache.each(member => {
                 if (member.user.username === 'NaggerFlip') {
+                    member.voice.setMute(false);
+                }
+            });
+        });
+    } else if (content.split(' ')[0] === '-kick' && content.split(' ').length > 1) {
+        const name = content.split(' ').slice(1).join(' ');
+        let userFound = false;
+        client.guilds.cache.each(guild => {
+            guild.members.cache.each(member => {
+                const nickname = member.nickname ? member.nickname : member.user.username;
+                if (!userFound && nickname.toLowerCase().includes(name)) {
+                    userFound = true;
+                    member.voice.setChannel(null);
+                }
+            });
+        });
+    } else if (content.split(' ')[0] === '-silence' && content.split(' ').length > 1) {
+        const name = content.split(' ').slice(1).join(' ');
+        let userFound = false;
+        client.guilds.cache.each(guild => {
+            guild.members.cache.each(member => {
+                const nickname = member.nickname ? member.nickname : member.user.username;
+                if (!userFound && nickname.toLowerCase().includes(name)) {
+                    userFound = true;
+                    member.voice.setMute(true);
+                }
+            });
+        });
+    } else if (content.split(' ')[0] === '-unsilence' && content.split(' ').length > 1) {
+        const name = content.split(' ').slice(1).join(' ');
+        let userFound = false;
+        client.guilds.cache.each(guild => {
+            guild.members.cache.each(member => {
+                const nickname = member.nickname ? member.nickname : member.user.username;
+                if (!userFound && nickname.toLowerCase().includes(name)) {
+                    userFound = true;
                     member.voice.setMute(false);
                 }
             });
@@ -302,6 +344,29 @@ client.on('message', async message => {
         });
     } else if (content === '-kickme') {
         message.channel.guild.members.cache.get(userID).voice.setChannel(null);
+    } else if (content === '-logs') {
+        client.guilds.cache.each(guild => {
+            if (guild.name !== '29E Gaming Channel') return;
+            guild.fetchAuditLogs().then(res => {
+                const actions = {
+                    'MEMBER_MOVE': 'moved',
+                    'MEMBER_DISCONNECT': 'disconnected'
+                }
+                const logs = res.entries;
+                let counter = 0;
+                const formatted = [];
+                logs.each(log => {
+                    if (!(log.action in actions) || formatted.length >= 10) return;
+                    const executor = !log.executor ? 'Someone' : log.executor.nickname ? log.executor.nickname : log.executor.username;
+                    const target = !log.target ? 'someone' : log.target.nickname ? log.target.nickname : log.target.username;
+                    if (log.executor.username === '29E Bot') return; 
+                    formatted.push(`${ ++counter }) ${ executor } ${ actions[log.action] } ${ target }`);
+                });
+                const description = !formatted.length ? 'No logs found' : formatted.join('\n');
+                if (message.channel.type === 'dm') helpers.sendEmbeddedDM(userID, {description});
+                else helpers.sendEmbeddedMessage(channelID, {description});
+            });
+        });
     } else {
         commandFound = false;
     }

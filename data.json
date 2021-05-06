@@ -1,14 +1,14 @@
 {
     "fish": {
         "fishDelay": {
-            "messages": 16,
-            "time": 1620210484207,
+            "messages": 9,
+            "time": 1620294742909,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "pompano",
-            "image": "https://cdn-0.generatormix.com/images/fish/pompano.jpg",
+            "name": "hawkfish",
+            "image": "https://cdn-0.generatormix.com/images/fish/hawkfish.jpg",
             "caught": false
         }
     },
