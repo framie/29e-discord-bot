@@ -350,17 +350,26 @@ client.on('message', async message => {
             guild.fetchAuditLogs().then(res => {
                 const actions = {
                     'MEMBER_MOVE': 'moved',
-                    'MEMBER_DISCONNECT': 'disconnected'
+                    'MEMBER_DISCONNECT': 'disconnected',
+                    'MEMBER_UPDATE': ''
                 }
                 const logs = res.entries;
                 let counter = 0;
                 const formatted = [];
                 logs.each(log => {
+                    if (log.action === 'MEMBER_UPDATE') console.log(log.executor.username, log.target.username, log.changes);
                     if (!(log.action in actions) || formatted.length >= 10) return;
-                    const executor = !log.executor ? 'Someone' : log.executor.nickname ? log.executor.nickname : log.executor.username;
-                    const target = !log.target ? 'someone' : log.target.nickname ? log.target.nickname : log.target.username;
-                    if (log.executor.username === '29E Bot') return; 
-                    formatted.push(`${ ++counter }) ${ executor } ${ actions[log.action] } ${ target }`);
+                    let executor = !log.executor ? 'Someone' : log.executor.nickname ? log.executor.nickname : log.executor.username;
+                    let target = !log.target ? 'someone' : log.target.nickname ? log.target.nickname : log.target.username;
+                    if (executor === '29E Bot') return;
+                    let action = actions[log.action];
+                    if (log.action === 'MEMBER_UPDATE') {
+                        if (log.changes[0].key === 'mute') {
+                            action = log.changes[0].new ? 'muted' : 'unmuted';
+                        }
+                    }
+                    if (!action) return;
+                    formatted.push(`${ ++counter }) ${ executor } ${ action } ${ target }`);
                 });
                 const description = !formatted.length ? 'No logs found' : formatted.join('\n');
                 if (message.channel.type === 'dm') helpers.sendEmbeddedDM(userID, {description});
