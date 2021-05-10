@@ -2,13 +2,13 @@
     "fish": {
         "fishDelay": {
             "messages": 16,
-            "time": 1620621674535,
+            "time": 1620644316349,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "goatfish",
-            "image": "https://cdn-0.generatormix.com/images/fish/goatfish.jpg",
+            "name": "Bass",
+            "image": "https://cdn-0.generatormix.com/images/fish/bass-(peacock).jpg",
             "caught": false
         }
     },
