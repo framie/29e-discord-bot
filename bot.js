@@ -134,6 +134,7 @@ client.on('message', async message => {
 
     const soundMap = {
         '11': 'Monk',
+        'afineaddition': 'General Grevious',
         'andmyaxe': 'Gimli',
         'boourns': '',
         'care': 'Tiny Violin',
