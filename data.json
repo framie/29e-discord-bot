@@ -1,18 +1,18 @@
 {
     "fish": {
         "fishDelay": {
-            "messages": 16,
-            "time": 1620644316349,
+            "messages": 5,
+            "time": 1620709677034,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "Bass",
-            "image": "https://cdn-0.generatormix.com/images/fish/bass-(peacock).jpg",
-            "caught": false
+            "name": "Bluefish",
+            "image": "https://cdn-0.generatormix.com/images/fish/bluefish.jpg",
+            "caught": true
         }
     },
     "theme": {
-        "currentTheme": "Songs you'd hear at a 29e Important Meeting"
+        "currentTheme": "Angry Music"
     }
 }
