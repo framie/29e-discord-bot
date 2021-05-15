@@ -402,6 +402,10 @@ client.on('message', async message => {
                 'description': 'Provides weather report for current location',
                 'usage': ['-weather']
             },
+            'olly': {
+                'hidden': true,
+                'func': () => helpers.ollyHandler(message)
+            },
             'schneebs': {
                 'hidden': true,
                 'func': () => helpers.schneebsHandler(message)

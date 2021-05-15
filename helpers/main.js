@@ -442,6 +442,19 @@ class Helpers {
         this.sendEmbeddedMessage(channelID, {image: {url: imageUrls[index - 1]}});
     }
 
+    ollyHandler = (message) => {
+        const args = message.content.substring(1).split(' ').slice(1);
+        const channelID = message.channel.id;
+        const imageUrls = [
+            'https://i.imgur.com/AsdJsJH.png'
+        ];
+        let index = 1;
+        if (args.length && !isNaN(args[0])) index = parseInt(args[0]);
+        if (index < 1) index = 1;
+        else if (index > imageUrls.length) index = imageUrls.length;
+        this.sendEmbeddedMessage(channelID, {image: {url: imageUrls[index - 1]}});
+    }
+
     getUserVoiceChannel = (channels, userID) => {
         let foundChannel = undefined;
         Object.entries(channels).forEach(([id, channel]) => {
