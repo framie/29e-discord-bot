@@ -2,14 +2,14 @@
     "fish": {
         "fishDelay": {
             "messages": 7,
-            "time": 1620967687486,
+            "time": 1621248744733,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "needlefish",
-            "image": "https://cdn-0.generatormix.com/images/fish/needlefish.jpg",
-            "caught": false
+            "name": "white grunt",
+            "image": "https://cdn-0.generatormix.com/images/fish/white-grunt.jpg",
+            "caught": true
         }
     },
     "theme": {
