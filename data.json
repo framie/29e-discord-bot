@@ -1,14 +1,14 @@
 {
     "fish": {
         "fishDelay": {
-            "messages": 12,
-            "time": 1621311396189,
+            "messages": 1,
+            "time": 1621421884255,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "bluefin tuna",
-            "image": "https://cdn-0.generatormix.com/images/fish/bluefin-tuna.jpg",
+            "name": "basselets",
+            "image": "https://cdn-0.generatormix.com/images/fish/basselets.jpg",
             "caught": false
         }
     },

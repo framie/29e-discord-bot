@@ -318,7 +318,7 @@
     "319733281476313088": {
         "id": "319733281476313088",
         "name": "NaggerFlip",
-        "fishCaught": 55,
+        "fishCaught": 56,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -409,6 +409,9 @@
             },
             "18-5-2021": {
                 "fishCaught": 2
+            },
+            "19-5-2021": {
+                "fishCaught": 1
             }
         }
     },
@@ -514,9 +517,12 @@
     "361789906487345152": {
         "id": "361789906487345152",
         "name": "Professor Dumbledore",
-        "fishCaught": 1,
+        "fishCaught": 2,
         "days": {
             "19-4-2021": {
+                "fishCaught": 1
+            },
+            "18-5-2021": {
                 "fishCaught": 1
             }
         }
