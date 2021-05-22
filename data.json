@@ -1,14 +1,14 @@
 {
     "fish": {
         "fishDelay": {
-            "messages": 1,
-            "time": 1621421884255,
+            "messages": 8,
+            "time": 1621678043034,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "basselets",
-            "image": "https://cdn-0.generatormix.com/images/fish/basselets.jpg",
+            "name": "blacktip shark",
+            "image": "https://cdn-0.generatormix.com/images/fish/blacktip-shark.jpg",
             "caught": false
         }
     },
