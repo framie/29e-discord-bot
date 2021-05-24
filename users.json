@@ -245,7 +245,7 @@
     "304217193854402563": {
         "id": "304217193854402563",
         "name": "cammac74",
-        "fishCaught": 36,
+        "fishCaught": 37,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -311,6 +311,9 @@
                 "fishCaught": 1
             },
             "18-5-2021": {
+                "fishCaught": 1
+            },
+            "24-5-2021": {
                 "fishCaught": 1
             }
         }
