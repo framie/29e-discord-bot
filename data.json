@@ -1,14 +1,14 @@
 {
     "fish": {
         "fishDelay": {
-            "messages": 8,
-            "time": 1621678043034,
+            "messages": 2,
+            "time": 1621985780749,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "blacktip shark",
-            "image": "https://cdn-0.generatormix.com/images/fish/blacktip-shark.jpg",
+            "name": "yellowfin tuna",
+            "image": "https://cdn-0.generatormix.com/images/fish/yellowfin-tuna.jpg",
             "caught": false
         }
     },
