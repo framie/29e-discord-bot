@@ -1,14 +1,14 @@
 {
     "fish": {
         "fishDelay": {
-            "messages": 2,
-            "time": 1621985780749,
+            "messages": 9,
+            "time": 1622093472235,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "yellowfin tuna",
-            "image": "https://cdn-0.generatormix.com/images/fish/yellowfin-tuna.jpg",
+            "name": "goatfish",
+            "image": "https://cdn-0.generatormix.com/images/fish/goatfish.jpg",
             "caught": false
         }
     },
