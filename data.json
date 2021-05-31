@@ -1,18 +1,18 @@
 {
     "fish": {
         "fishDelay": {
-            "messages": 5,
-            "time": 1622372355108,
+            "messages": 11,
+            "time": 1622443726485,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "mandarin fish",
-            "image": "https://cdn-0.generatormix.com/images/fish/mandarin-fish.jpg",
-            "caught": true
+            "name": "Bream",
+            "image": "https://cdn-0.generatormix.com/images/fish/bream-(black).jpg",
+            "caught": false
         }
     },
     "theme": {
-        "currentTheme": "Angry Music"
+        "currentTheme": "Songs Ned listens to while Cleaning"
     }
 }
