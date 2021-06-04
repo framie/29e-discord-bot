@@ -1,14 +1,14 @@
 {
     "fish": {
         "fishDelay": {
-            "messages": 12,
-            "time": 1622461800425,
+            "messages": 19,
+            "time": 1622810387453,
             "messageThreshold": 20,
             "timeThreshold": 300000
         },
         "currentFish": {
-            "name": "hammerhead",
-            "image": "https://cdn-0.generatormix.com/images/fish/hammerhead.jpg",
+            "name": "tiger shark",
+            "image": "https://cdn-0.generatormix.com/images/fish/tiger-shark.jpg",
             "caught": true
         }
     },
