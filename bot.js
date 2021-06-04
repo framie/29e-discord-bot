@@ -158,6 +158,7 @@ client.on('message', async message => {
         'stillonlycountsasone': 'Gimli',
         'stillsharp': 'Boromir, Eldest Son of Denethor',
         'stinky': 'monke',
+        'thatsreallyinteresting': '',
         'thisisagoodsword': 'Haleth, Son of Hama',
         'unlimitedpower': 'Emperor Palpatine',
         'youunderestimatemypower': 'Anakin Skywalker',
