@@ -357,7 +357,7 @@
     "319733281476313088": {
         "id": "319733281476313088",
         "name": "NaggerFlip",
-        "fishCaught": 59,
+        "fishCaught": 60,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -459,6 +459,9 @@
                 "fishCaught": 1
             },
             "31-5-2021": {
+                "fishCaught": 1
+            },
+            "14-6-2021": {
                 "fishCaught": 1
             }
         }
