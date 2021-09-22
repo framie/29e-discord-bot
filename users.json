@@ -357,7 +357,7 @@
     "319733281476313088": {
         "id": "319733281476313088",
         "name": "NaggerFlip",
-        "fishCaught": 60,
+        "fishCaught": 61,
         "days": {
             "25-3-2021": {
                 "fishCaught": 5
@@ -463,6 +463,9 @@
             },
             "14-6-2021": {
                 "fishCaught": 1
+            },
+            "10-9-2021": {
+                "fishCaught": 1
             }
         }
     },
@@ -491,7 +494,7 @@
     "115814597012881414": {
         "id": "115814597012881414",
         "name": "PastyFaceMalone",
-        "fishCaught": 5,
+        "fishCaught": 6,
         "days": {
             "25-3-2021": {
                 "fishCaught": 1
@@ -501,6 +504,9 @@
             },
             "17-4-2021": {
                 "fishCaught": 2
+            },
+            "10-9-2021": {
+                "fishCaught": 1
             }
         }
     },
