@@ -15,6 +15,7 @@ const music = new Music(client, helpers);
 const theme = new Theme(client, helpers);
 const channelMap = {};
 const userIDMap = {};
+const botChannel = {};
 const admins = [
     'chiwa',
     'NaggerFlip'
@@ -37,11 +38,14 @@ const fishDelay = client.data && client.data.fish.fishDelay
 // fishDelay.messages += fishDelay.messageThreshold;
 
 client.once('ready', () => {
-    console.log(`Connected. Logged in as: ${ client.user.username } - (${ client.user.id })`);
     client.channels.cache.each(channel => {
         channelMap[channel.id] = {
             id: channel.id,
             name: channel.name
+        }
+        if (channel.name === '29e-bot') {
+            botChannel.id = channel.id;
+            botChannel.name = channel.name;
         }
     });
 
@@ -61,6 +65,8 @@ client.once('ready', () => {
     });
 
     console.log('ChannelMap', channelMap);
+    console.log(`Connected. Logged in as: ${ client.user.username } - (${ client.user.id })`);
+    helpers.sendEmbeddedMessage(botChannel.id, {description: 'Bot refreshed'});
 });
 
 // Bot message handler
@@ -108,6 +114,7 @@ client.on('message', async message => {
     const userName = message.author.username;
     const userID = message.author.id;
     const content = message.content.toLowerCase();
+    const rawContent = message.content;
     const guildMember = message.channel.guild && message.channel.guild.members.cache.get(userID);
     const now = new Date();
     let commandFound = true;
@@ -386,6 +393,7 @@ client.on('message', async message => {
 
     if (!commandFound && content[0] === '-') {
         const args = content.substring(1).split(' ').slice(1);
+        const rawArgs = rawContent.slice(1).split(' ').slice(1);
         const command = content.substring(1).split(' ')[0];
 
         const commands = {
@@ -417,7 +425,7 @@ client.on('message', async message => {
                 'hidden': true,
                 'func': () => helpers.snrubHandler(message)
             },
-            'yahn': {
+            'yah': {
                 'hidden': true,
                 'func': () => helpers.yahnHandler(message)
             },
@@ -474,10 +482,10 @@ client.on('message', async message => {
             
 
             // Music/sound commands
-            'song': {
-                'func': () => music.playHandler(message, args),
+            'p': {
+                'func': () => music.playHandler(message, rawArgs),
                 'description': 'Provides details for provided song/video (will search YouTube)',
-                'usage': ['-song (song name | YouTube url)']
+                'usage': ['-p (song name | YouTube url)']
             }
         }
 

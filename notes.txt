@@ -2,9 +2,15 @@ nodemon bot.js
 
 https://leovoel.github.io/embed-visualizer/
 
+song queue
+search by song name
+song progress
+resume song
+playlist saver
+spotify support
+
 tell jokes
 mute everyone and play a song
-playlist saver
 random fish size and leaderboard for biggest fish
 vote kick similar to cs
 statistics for theme and pseudo random and admin

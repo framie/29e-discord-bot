@@ -20,9 +20,13 @@ class Music {
         return new Promise( async (resolve, reject) => {
             if (song.includes('https://www.youtube.com/watch?v=')) {
                 const songInfo = await ytdl.getInfo(song);
+                let audioFormats = ytdl.filterFormats(songInfo.formats, 'audioonly');
+                console.log('Formats with only audio: ' + audioFormats.length);
+                console.log('audioFormats' + audioFormats);
                 resolve({
                     title: songInfo.videoDetails.title,
-                    url: songInfo.videoDetails.video_url
+                    url: songInfo.videoDetails.video_url,
+                    length: songInfo.videoDetails.lengthSeconds
                 });
             } else {
                 resolve({
@@ -46,49 +50,28 @@ class Music {
     }
 
     playHandler = async (message, args) => {
+        console.log('playHandler() called');
         const channelID = message.channel.id;
+        const user = message.author.username;
         const userID = message.author.id;
         return new Promise( async (resolve, reject) => {
-            const userVoiceChannel = this.helpers.getUserVoiceChannel(this.bot.channels, userID);
+            const userVoiceChannel = this.helpers.getUserVoiceChannel(this.bot.channels, user);
             if (!userVoiceChannel) {
-                this.helpers.sendEmbeddedMessage(channelID, 'You need to be connect to a voice channel to run this command.');
+                const message = 'You need to be connect to a voice channel to run this command.';
+                this.helpers.sendEmbeddedMessage(channelID, {description: message});
                 return false;
             }
-            console.log('userVoiceChannel.id', userVoiceChannel.id);
             this.getSongInfo(args.join(' ')).then( async (songInfo) => {
                 const message = `[${ this.helpers.unescape(songInfo.title) }](${ songInfo.url }) [<@${ userID }>]`;
-                console.log(0);
-                const botVoiceChannel = this.helpers.getUserVoiceChannel(this.bot.channels, this.bot.id);
-                const func1 = (error = undefined) => {
-                    //Check to see if any errors happen while joining.
-                    console.log(1)
-                    if (error) {
-                        return console.error(error);
-                    }
-                    console.log(2)
-
-                    this.bot.getAudioContext(userVoiceChannel.id, (error, stream) => {
-                        console.log(3)
-                        if (error) {
-                            return console.error(error);
-                        }
-                        console.log(4)
-
-                        fs.createReadStream(ytdl(songInfo.url)).pipe(stream, {end: false});
-
-                    })
-                    this.helpers.sendEmbeddedMessage(channelID, message);
-                }
-                botVoiceChannel && console.log(botVoiceChannel.id, userVoiceChannel.id, botVoiceChannel.id === userVoiceChannel.id);
-                if (botVoiceChannel && botVoiceChannel.id === userVoiceChannel.id) {
-                    console.log('no');
-                    func1();
-                } else {
-                    console.log('yes');
-                    this.bot.joinVoiceChannel(userVoiceChannel.id, (error) => func1(error));
-                }
+                const connection = await userVoiceChannel.join();
+                this.helpers.sendEmbeddedMessage(channelID, {description: message});
+                const dispatcher = connection.play(ytdl(songInfo.url, { filter: 'audioonly'}), {volume: 1});
+                dispatcher.on('finish', () => {
+                    dispatcher.destroy();
+                });
             }).catch( async (err) => {
-                this.helpers.sendEmbeddedMessage(channelID, err);
+                console.log(err)
+                this.helpers.sendEmbeddedMessage(channelID, {description: 'An error has occurred'});
             });
         });
     }
