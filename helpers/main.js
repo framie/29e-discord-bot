@@ -459,7 +459,7 @@ class Helpers {
         let foundChannel = undefined;
         Object.entries(channels).forEach(([id, channel]) => {
             if (foundChannel) return true;
-            if (userID in channel.members) foundChannel = channel;
+            if (channel && channel.members && userID in channel.members) foundChannel = channel;
         });
         return foundChannel;
     }

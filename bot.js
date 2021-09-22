@@ -59,6 +59,8 @@ client.once('ready', () => {
             }
         });
     });
+
+    console.log('ChannelMap', channelMap);
 });
 
 // Bot message handler

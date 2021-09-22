@@ -1,7 +1,7 @@
 {
     "fish": {
         "fishDelay": {
-            "messages": 9,
+            "messages": 11,
             "time": 1631283842347,
             "messageThreshold": 20,
             "timeThreshold": 300000

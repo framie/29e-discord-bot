@@ -3,3 +3,4 @@ package-lock.json
 node_modules*
 notes.txt
 .DS_Store
+.vscode
