@@ -1,14 +1,14 @@
 {
     "fish": {
         "fishDelay": {
-            "messages": 8,
-            "time": 1632316330805,
-            "messageThreshold": 20,
-            "timeThreshold": 300000
+            "messages": 2,
+            "time": 1632378373361,
+            "messageThreshold": 40,
+            "timeThreshold": 600000
         },
         "currentFish": {
-            "name": "plecostomus",
-            "image": "https://cdn-0.generatormix.com/images/fish/plecostomus.jpg",
+            "name": "triggerfish",
+            "image": "https://cdn-0.generatormix.com/images/fish/triggerfish.jpg",
             "caught": false
         }
     },

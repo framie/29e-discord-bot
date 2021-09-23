@@ -455,20 +455,31 @@ class Helpers {
         this.sendEmbeddedMessage(channelID, {image: {url: imageUrls[index - 1]}});
     }
 
-    getUserVoiceChannel = (channels, user) => {
+    getUserVoiceChannel = (user) => {
         let voiceChannel;
         let userFound = false;
-        this.client.guilds.cache.each(guild => {
-            guild.members.cache.each(member => {
-                const displayName = member.displayName
-                    ? member.displayName.toLowerCase()
-                    : '';
-                if (!userFound && (member.user.username.toLowerCase().includes(user) || (displayName && displayName.includes(user)))) {
-                    userFound = true;
-                    voiceChannel = member.voice.channel;
-                }
+        if (typeof user === 'string') {
+            this.client.guilds.cache.each(guild => {
+                guild.members.cache.each(member => {
+                    const displayName = member.displayName
+                        ? member.displayName.toLowerCase()
+                        : '';
+                    if (!userFound && (member.user.username.toLowerCase().includes(user) || (displayName && displayName.includes(user)))) {
+                        userFound = true;
+                        voiceChannel = member.voice.channel;
+                    }
+                });
             });
-        });
+        } else if (typeof user === 'number') {
+            this.client.guilds.cache.each(guild => {
+                guild.members.cache.each(member => {
+                    if (!userFound && member.user.id === user) {
+                        userFound = true;
+                        voiceChannel = member.voice.channel;
+                    }
+                });
+            });
+        }
         return voiceChannel;
     }
 

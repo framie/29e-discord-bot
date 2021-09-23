@@ -1,4 +1,5 @@
 const ytdl = require('ytdl-core');
+const yt = require('youtube-search-without-api-key');
 const fs = require('fs');
 const auth = require('../auth.json');
 const Helpers = require('./main.js');
@@ -10,10 +11,18 @@ class Music {
         this.bot = bot;
         this.helpers = helpers;
         this.queue = [];
+        this.connection = undefined;
+        this.dispatcher = undefined;
     }
 
     getQueue = () => {
 
+    }
+
+    convertDuration = (duration) => {
+        let seconds = +duration.split(':')[1];
+        seconds += duration.split(':')[0] * 60;
+        return seconds;
     }
 
     getSongInfo = async (song) => {
@@ -29,33 +38,39 @@ class Music {
                     length: songInfo.videoDetails.lengthSeconds
                 });
             } else {
-                resolve({
-                    title: song,
-                    url: `https://www.youtube.com/watch?v=${ song }`
-                });
-                return true;
-                const baseUrl = `https://www.googleapis.com/youtube/v3/search?key=${ auth.google_api_key }&maxResults=1&type=video,playlist&part=snippet&safeSearch=none&regionCode=AU&q=`;
-                this.helpers.AJAX('GET', `${ baseUrl }${ song }`, {}, res => {
-                    const searchResults = res.items;
-                    if (searchResults.length > 0) {
-                        resolve({
-                            title: searchResults[0].snippet.title,
-                            url: `https://www.youtube.com/watch?v=${ res.items[0].id.videoId }`
-                        });
-                    }
-                });
+                const videos = await yt.search(song);
+                if (videos.length) {
+                    resolve({
+                        title: videos[0].title,
+                        url:  videos[0].url,
+                        length: this.convertDuration(videos[0].duration_raw)
+                    });
+                }
             }
             reject('Could not find a track for that input!');
         });
     }
 
+    stopHandler = async () => {
+        // const userVoiceChannel = this.helpers.getUserVoiceChannel(user);
+        // const botVoiceChannel = this.helpers.getUserVoiceChannel(this.bot.id);
+        this.dispatcher && this.dispatcher.destroy();
+    }
+
+    pauseHandler = async () => {
+        this.dispatcher && this.dispatcher.pause();
+    }
+
+    resumeHandler = async () => {
+        this.dispatcher && this.dispatcher.resume();
+    }
+
     playHandler = async (message, args) => {
-        console.log('playHandler() called');
         const channelID = message.channel.id;
         const user = message.author.username;
         const userID = message.author.id;
         return new Promise( async (resolve, reject) => {
-            const userVoiceChannel = this.helpers.getUserVoiceChannel(this.bot.channels, user);
+            const userVoiceChannel = this.helpers.getUserVoiceChannel(user);
             if (!userVoiceChannel) {
                 const message = 'You need to be connect to a voice channel to run this command.';
                 this.helpers.sendEmbeddedMessage(channelID, {description: message});
@@ -65,9 +80,9 @@ class Music {
                 const message = `[${ this.helpers.unescape(songInfo.title) }](${ songInfo.url }) [<@${ userID }>]`;
                 const connection = await userVoiceChannel.join();
                 this.helpers.sendEmbeddedMessage(channelID, {description: message});
-                const dispatcher = connection.play(ytdl(songInfo.url, { filter: 'audioonly'}), {volume: 1});
-                dispatcher.on('finish', () => {
-                    dispatcher.destroy();
+                this.dispatcher = connection.play(ytdl(songInfo.url, { filter: 'audioonly'}), {volume: 1});
+                this.dispatcher.on('finish', () => {
+                    this.dispatcher.destroy();
                 });
             }).catch( async (err) => {
                 console.log(err)

@@ -17,8 +17,7 @@ const channelMap = {};
 const userIDMap = {};
 const botChannel = {};
 const admins = [
-    'chiwa',
-    'NaggerFlip'
+    'chiwa'
 ];
 let bot = {};
 
@@ -31,8 +30,8 @@ const fishDelay = client.data && client.data.fish.fishDelay
 : {
     messages: 0,
     time: new Date().getTime(),
-    messageThreshold: 20,
-    timeThreshold: 60000 * 5
+    messageThreshold: 40,
+    timeThreshold: 60000 * 10
 }
 // fishDelay.time -= fishDelay.timeThreshold;
 // fishDelay.messages += fishDelay.messageThreshold;
@@ -178,7 +177,7 @@ client.on('message', async message => {
         const command = args[0];
         if (!(command in soundMap)) return false;
         let voiceChannel;
-        if (args.length > 1 && userName !== 'yahnschiefpresssecretary') {
+        if (args.length > 1 && userName !== 'yahniafoeofthenight') {
             const user = args.slice(1).join(' ');
             let userFound = false;
             client.guilds.cache.each(guild => {
@@ -425,7 +424,7 @@ client.on('message', async message => {
                 'hidden': true,
                 'func': () => helpers.snrubHandler(message)
             },
-            'yah': {
+            'yahn': {
                 'hidden': true,
                 'func': () => helpers.yahnHandler(message)
             },
@@ -481,11 +480,26 @@ client.on('message', async message => {
 
             
 
-            // Music/sound commands
+            // Musiccommands
             'p': {
                 'func': () => music.playHandler(message, rawArgs),
-                'description': 'Provides details for provided song/video (will search YouTube)',
+                'description': 'Plays provided song/video (will search YouTube)',
                 'usage': ['-p (song name | YouTube url)']
+            },
+            'stop': {
+                'func': () => music.stopHandler(message),
+                'description': 'Stops any currently playing music',
+                'usage': ['-stop']
+            },
+            'pause': {
+                'func': () => music.pauseHandler(message),
+                'description': 'Pauses any currently playing music',
+                'usage': ['-pause']
+            },
+            'resume': {
+                'func': () => music.resumeHandler(message),
+                'description': 'Resumes any previously paused music',
+                'usage': ['-resume']
             }
         }
 

@@ -1,13 +1,17 @@
 nodemon bot.js
+tmux at -t 29e-bot
 
 https://leovoel.github.io/embed-visualizer/
 
-song queue
 search by song name
+song stop command
+song queue
+song skip command
 song progress
+spotify support
+decode spotify playlist and searches in youtube for them
 resume song
 playlist saver
-spotify support
 
 tell jokes
 mute everyone and play a song
